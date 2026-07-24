@@ -1,1 +1,851 @@
+SECTION 1: LINUX BASICS
+Q1. What happens when a Linux server boots?
+Answer
 
+Boot Process:
+
+Plain Text
+BIOS/UEFI
+
+↓
+
+GRUB Boot Loader
+
+↓
+
+Kernel Loading
+
+↓
+
+init/systemd
+
+↓
+
+Services Start
+
+↓
+
+User Login
+
+Show more lines
+Interview Tip
+
+For Production Support roles, focus on:
+
+Systemd
+Service startup
+Application startup dependencies
+Q2. How do you check Linux Version?
+Commands
+Shell
+cat /etc/os-release
+
+Show more lines
+Shell
+uname -a
+
+Show more lines
+Shell
+hostnamectl
+
+Show more lines
+Q3. How do you check Server Uptime?
+Shell
+uptime
+
+Show more lines
+
+Example:
+
+Shell
+10:30:00 up 150 days, 5 users
+
+Show more lines
+
+Shows:
+
+Server running duration
+Load Average
+Q4. Difference between Load and CPU Utilization?
+CPU Utilization
+
+Percentage of CPU usage.
+
+Load Average
+
+Number of processes waiting for CPU.
+
+Example:
+
+Plain Text
+8 CPU Server
+
+Load = 2 → Healthy
+
+
+
+Load = 30 → Problem
+
+Show more lines
+SECTION 2: FILE SYSTEM QUESTIONS
+Q5. Check Disk Utilization
+Shell
+df -h
+
+Show more lines
+
+Output:
+
+Q6. Check Directory Utilization
+Shell
+du -sh *
+
+Show more lines
+Q7. Find Largest Files
+Shell
+find / -type f -size +1G
+
+Show more lines
+Real Production Scenario
+Problem
+
+Application suddenly stopped.
+
+Investigation
+Shell
+df -h
+
+Show more lines
+
+Found:
+
+Plain Text
+Filesystem 100%
+
+Show more lines
+
+Logs consumed disk.
+
+Resolution
+Shell
+gzip old_logs.log
+
+Show more lines
+
+Archive logs.
+
+SECTION 3: PROCESS MANAGEMENT
+Q8. Check Running Processes
+Shell
+ps -ef
+
+``
+
+Show more lines
+Q9. Find Specific Application Process
+Shell
+ps -ef | grep java
+
+Show more lines
+
+Example:
+
+Shell
+ps -ef | grep oms
+
+Show more lines
+Q10. Top CPU Processes
+Shell
+top
+
+Show more lines
+
+or
+
+Shell
+ps -eo pid,cmd,%cpu --sort=-%cpu
+
+Show more lines
+Q11. Top Memory Processes
+Shell
+ps aux --sort=-%mem | head
+
+Show more lines
+Q12. Kill Process
+Shell
+kill PID
+
+Show more lines
+
+Force Kill:
+
+Shell
+kill -9 PID
+
+Show more lines
+Production Scenario
+
+OMS hung.
+
+Check:
+
+Shell
+top
+
+Show more lines
+
+Found zombie process consuming resources.
+
+Restart service after RCA.
+
+SECTION 4: SERVICE MANAGEMENT
+Q13. Check Service Status
+Shell
+systemctl status nginx
+
+Show more lines
+
+or
+
+Shell
+systemctl status application
+
+`
+
+Show more lines
+Q14. Start Service
+Shell
+systemctl start service_name
+
+
+
+Show more lines
+Q15. Stop Service
+Shell
+systemctl stop service_name
+
+Show more lines
+Q16. Restart Service
+Shell
+systemctl restart service_name
+
+Show more lines
+Q17. Enable Service During Boot
+Shell
+systemctl enable service_name
+
+Show more lines
+SECTION 5: LOG TROUBLESHOOTING
+Q18. View Log File
+Shell
+cat application.log
+
+Show more lines
+Q19. Monitor Log Live
+Shell
+tail -f application.log
+
+Show more lines
+Q20. Search Errors
+Shell
+grep ERROR application.log
+
+Show more lines
+Q21. Search Last 100 Lines
+Shell
+tail -100 application.log
+
+Show more lines
+Real Production Scenario
+
+User unable to place order.
+
+Log Analysis:
+
+Shell
+grep "database" oms.log
+
+Show more lines
+
+Found:
+
+Plain Text
+Connection pool exhausted
+
+Show more lines
+
+Root cause identified.
+
+SECTION 6: MEMORY TROUBLESHOOTING
+Q22. Check Memory
+Shell
+free -m
+
+Show more lines
+
+Example:
+
+Plain Text
+Total
+
+Used
+
+Free
+
+Show more lines
+Q23. Memory Statistics
+Shell
+vmstat
+
+Show more lines
+Q24. Check Swap Usage
+Shell
+swapon -s
+
+Show more lines
+Production Scenario
+
+OMS became slow.
+
+Check:
+
+Shell
+free -m
+
+Show more lines
+
+Memory nearly exhausted.
+
+Root Cause:
+
+Java memory leak.
+
+SECTION 7: CPU PERFORMANCE TROUBLESHOOTING
+Q25. Check CPU Usage
+Shell
+top
+
+Show more lines
+Q26. Historical CPU Data
+Shell
+sar -u
+
+Show more lines
+Q27. System Activity
+Shell
+vmstat 2
+
+
+
+Show more lines
+Production Scenario
+
+Market opens.
+
+CPU suddenly reaches:
+
+Plain Text
+100%
+
+Show more lines
+
+Cause:
+
+High market data feed load.
+
+SECTION 8: NETWORK TROUBLESHOOTING
+
+Very Frequently Asked.
+
+Q28. Check IP Address
+Shell
+ip addr
+
+Show more lines
+
+or
+
+Shell
+ifconfig
+
+Show more lines
+Q29. Check Hostname
+Shell
+hostname
+
+
+
+Show more lines
+Q30. Test Connectivity
+Shell
+ping google.com
+
+Show more lines
+Production Example
+
+OMS unable to connect Exchange.
+
+Check:
+
+Shell
+ping exchange-gateway
+
+Show more lines
+
+Packet loss observed.
+
+Q31. Trace Network Route
+Shell
+traceroute hostname
+
+Show more lines
+Q32. DNS Resolution
+Shell
+nslookup hostname
+
+Show more lines
+Q33. Check Open Ports
+Shell
+netstat -tulnp
+
+Show more lines
+
+or
+
+Shell
+ss -tulnp
+
+Show more lines
+Q34. Check Which Process Uses Port
+Shell
+lsof -i :8080
+
+Show more lines
+Q35. Check TCP Connections
+Real Production Scenario
+
+Application Down.
+
+Process running.
+
+Database up.
+
+Issue:
+
+Port not listening.
+
+Found through:
+
+Shell
+netstat -tulnp
+
+Show more lines
+SECTION 9: DATABASE CONNECTIVITY TROUBLESHOOTING
+Q36. Database Reachability
+
+PostgreSQL:
+
+Shell
+telnet dbserver 5432
+
+Show more lines
+
+MySQL:
+
+Shell
+telnet dbserver 3306
+
+Show more lines
+Q37. Verify Listener
+Real Production Scenario
+
+Application timeout.
+
+Found firewall blocking:
+
+Plain Text
+5432
+
+Show more lines
+
+port.
+
+SECTION 10: STORAGE TROUBLESHOOTING
+Q38. Check Mounted Filesystems
+Shell
+mount
+
+Show more lines
+Q39. Disk IO Analysis
+Shell
+iostat
+
+Show more lines
+Q40. Find Deleted File Still Consuming Disk
+Shell
+lsof | grep deleted
+
+Show more lines
+Production Scenario
+
+Disk:
+
+Plain Text
+100%
+
+Show more lines
+
+after cleanup still full.
+
+Cause:
+
+Deleted file still held by process.
+
+Restarted service.
+
+Space released.
+
+SECTION 11: HFT ENVIRONMENT QUESTIONS
+Q41. What Linux checks are important for HFT?
+Monitor
+CPU
+Network latency
+Memory
+Packet Loss
+NIC utilization
+
+Commands:
+
+Shell
+sar
+
+iftop
+
+vmstat
+
+iostat
+
+netstat
+
+Show more lines
+Q42. HFT Client Complaining About Latency
+
+Check:
+
+Shell
+sar -n DEV
+
+Show more lines
+
+Verify:
+
+Packet drops
+Bandwidth
+CPU saturation
+SECTION 12: APPLICATION TROUBLESHOOTING
+Q43. Application Running but User Cannot Login
+
+Check:
+
+Shell
+Application Logs
+
+Database Connectivity
+
+DNS
+
+Ports
+
+Show more lines
+Q44. Application Suddenly Crashes
+
+Check:
+
+Shell
+dmesg
+
+Show more lines
+Shell
+journalctl
+
+Show more lines
+
+Application logs.
+
+Q45. User Reports Slow Application
+
+Check:
+
+Shell
+CPU
+
+Memory
+
+Disk IO
+
+Database
+
+Network
+
+Show more lines
+SECTION 13: ADVANCED NETWORK QUESTIONS
+Q46. Difference Between TCP and UDP
+TCP
+
+Reliable
+
+Example:
+
+Plain Text
+Login
+
+Transactions
+
+API Calls
+
+Show more lines
+UDP
+
+Fast
+
+Example:
+
+Plain Text
+Market Data Feed
+
+HFT Feed
+
+Show more lines
+Q47. What is Three-Way Handshake?
+Plain Text
+SYN
+
+SYN ACK
+
+ACK
+
+Show more lines
+
+Establishes TCP connection.
+
+Q48. Why Is UDP Used In Market Data?
+
+Because:
+
+Faster
+Lower latency
+
+No need to wait for acknowledgements.
+
+SECTION 14: INFRASTRUCTURE LEVEL QUESTIONS
+Q49. Server Reachable via Ping but Application Not Working
+
+Check:
+
+Shell
+systemctl status
+
+Show more lines
+Shell
+netstat -tulnp
+
+Show more lines
+
+Logs.
+
+Q50. Server Not Reachable
+
+Check:
+
+Plain Text
+Network
+
+Switch
+
+Firewall
+
+Routing
+
+Cloud Security Groups
+
+Show more lines
+Q51. What is a Load Balancer?
+
+Distributes traffic across multiple servers.
+
+Example:
+
+Plain Text
+Users
+
+ ↓
+
+Load Balancer
+
+ ↓
+
+App1
+
+App2
+
+App3
+
+Show more lines
+Q52. What is High Availability?
+
+Avoid single point of failure.
+
+Example:
+
+Plain Text
+Primary App Server
+
+Secondary App Server
+
+Show more lines
+SECTION 15: PRODUCTION SUPPORT SCENARIOS
+Q53. Market Open In 15 Minutes. BOD Failed.
+Actions
+Identify failed job.
+Escalate immediately.
+Start bridge call.
+Fix critical dependencies.
+Update business every 15 mins.
+Q54. OMS Down During Market Hours
+Investigation
+Shell
+systemctl status oms
+
+Show more lines
+Shell
+tail -f oms.log
+
+Show more lines
+Shell
+top
+
+Show more lines
+Shell
+telnet DB
+
+Show more lines
+Q55. Exchange Disconnect Happened
+Check
+Shell
+ping exchange
+
+Show more lines
+Shell
+traceroute exchange
+
+Show more lines
+Shell
+netstat
+
+Show more lines
+
+Verify:
+
+Leased line
+Gateway
+Firewall
+SECTION 16: SENIOR LEVEL QUESTIONS
+Q56. How Do You Perform RCA?
+Format
+Incident
+
+OMS slow during market hours.
+
+Impact
+
+350 traders affected.
+
+Root Cause
+
+DB blocking query.
+
+Resolution
+
+Query terminated.
+
+Preventive Action
+
+Index created.
+
+Monitoring added.
+
+Q57. How Do You Reduce Repeated Incidents?
+Answer
+Automation
+Monitoring
+Alerting
+Runbooks
+Capacity Planning
+Problem Management
+Q58. What Linux Commands Do You Use Daily as Production Support Engineer?
+Shell
+top
+
+htop
+
+ps -ef
+
+grep
+
+awk
+
+sed
+
+tail -f
+
+cat
+
+less
+
+df -h
+
+du -sh
+
+vmstat
+
+iostat
+
+sar
+
+netstat
+
+ss
+
+nslookup
+
+ping
+
+traceroute
+
+lsof
+
+systemctl
+
+journalctl
+
+find
+
+chmod
+
+chown
+
+scp
+
+rsync
+
+Show less
+Manager Round Question
+Q59. Explain a Complex Linux Production Issue You Resolved
+Sample Answer
+
+"During market hours, traders reported delayed order execution. I checked application logs and found no errors. Linux monitoring showed CPU was normal but database response times were high. Further investigation revealed a long-running reporting query causing database locks. I coordinated with the DBA team, terminated the blocking query, and created an index for optimization. Service was restored within SLA, and preventive monitoring was implemented to prevent recurrence."
+
+This is the level of Linux knowledge typically expected from a 4+ year Production Support Engineer, Trading Support Analyst, Application Support Engineer, or Senior Production Support Engineer in organizations such as Edelweiss, Kotak, JP Morgan, Morgan Stanley, Goldman Sachs, Deutsche Bank, UBS, Nomura, NSE/BSE ecosystems, TCS, Accenture, Infosys, and LTIMindtree.
+
+Provide your feedback on BizChat
+You said:
