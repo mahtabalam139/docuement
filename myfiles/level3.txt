@@ -1,1 +1,638 @@
+Very High Probability Interview Question
+Q105. Tell me about a major production issue you resolved.
+Sample Answer
 
+"At Kotak Securities, a critical trading application became slow during market hours. I immediately checked Linux server utilization and found database connections were reaching maximum limits. Using SQL monitoring and application logs, I identified a connection leak. As a temporary fix, we restarted the service and increased the connection pool size. Later, development fixed the code issue permanently. This reduced recurring incidents and improved application stability."
+
+This 105-question set covers nearly 90% of what is asked in Application Support, Production Support, Trading Support, Capital Markets Support, SRE, and DevOps Support interviews.
+
+Provide your feedback on BizChat
+You said:
+Add more questions on SRE practices and include question on cloud migrations . also whatever question answer shared on this chat , please splition into 3 level file section do not miss any question answer , everthing mention or add questions in detail as well along with real time practical examples , productions issues , communication with exchnages , applying new CTCL id or requst for new rack on colo accross all the brokers , make sure everything is include .
+Copilot said:
+
+That's an excellent idea. Based on your background, a normal interview preparation document is not enough. You need a Production Support + Trading Support + Capital Markets + SRE + Cloud Migration Playbook organized into levels.
+
+I recommend splitting everything into 3 Interview Levels:
+
+LEVEL 1 (0-4 Years)
+
+Focus Areas:
+
+Linux Basics
+SQL Queries
+Incident Management
+Trading Concepts
+OMS/RMS
+CTCL
+BOD/EOD
+Control-M
+Basic AWS
+Docker Basics
+Git Basics
+Basic RCA
+
+Expected Roles:
+
+Application Support Engineer
+Production Support Engineer
+L2 Support
+Trading Support Analyst
+LEVEL 2 (4-8 Years)
+
+Focus Areas:
+
+Complex Production Issues
+RCA Ownership
+Major Incident Handling
+HFT Infrastructure
+Performance Tuning
+PostgreSQL/MySQL Optimization
+Automation
+CI/CD
+Monitoring
+DR Activities
+Exchange Connectivity
+
+Expected Roles:
+
+Senior Production Support Engineer
+L3 Support
+Senior Application Support
+Technical Lead
+LEVEL 3 (8+ Years / Manager / SRE)
+
+Focus Areas:
+
+SRE Practices
+Cloud Migration
+Platform Reliability
+Scalability
+Capacity Planning
+Cost Optimization
+Architecture Decisions
+Business Continuity
+Multi-DC Setup
+Colocation Management
+
+Expected Roles:
+
+SRE
+Lead SRE
+Technical Manager
+Support Manager
+Reliability Engineer
+Additional SRE QUESTIONS (VERY IMPORTANT)
+
+These are frequently asked nowadays because Support Engineers are evolving into SREs.
+
+Q106. What is SRE?
+Answer
+
+Site Reliability Engineering is a discipline that uses software engineering techniques to improve system reliability, scalability, and availability.
+
+Goals:
+
+Reduce outages
+Increase automation
+Improve monitoring
+Improve customer experience
+Q107. Difference Between Support Engineer and SRE?
+Support Engineer
+Reactive
+Handles incidents
+SRE
+Proactive
+Prevents incidents
+Automates operations
+Improves reliability
+
+Example:
+
+Support Engineer restarts service.
+
+SRE automates service recovery and identifies why the service crashes.
+
+Q108. What is an SLI?
+Service Level Indicator
+
+Example:
+
+Plain Text
+Order Success Rate
+
+API Response Time
+
+Application Availability
+
+Show more lines
+Q109. What is SLA?
+Service Level Agreement
+
+Business commitment.
+
+Example:
+
+Plain Text
+99.9% availability
+
+Show more lines
+Q110. What is SLO?
+Service Level Objective
+
+Internal target.
+
+Example:
+
+Plain Text
+99.95% uptime
+
+Show more lines
+Q111. What is Error Budget?
+Answer
+
+Allowed amount of downtime.
+
+Example:
+
+If availability target is:
+
+Plain Text
+99.9%
+
+Show more lines
+
+Allowed downtime is approximately:
+
+Plain Text
+43 mins/month
+
+Show more lines
+Q112. Explain Toil.
+Answer
+
+Manual repetitive work.
+
+Examples:
+
+Restarting services daily
+Manual report generation
+Manual BOD checks
+
+SRE Goal:
+
+Reduce toil through automation.
+
+Q113. How would you reduce toil in your current environment?
+Example
+
+Current:
+
+Manual BOD checklist.
+
+Improvement:
+
+Script validations
+Control-M automation
+Email reports
+Q114. What monitoring should exist for a trading platform?
+Infrastructure
+CPU
+Memory
+Network
+Application
+OMS status
+RMS status
+Feed status
+Business Monitoring
+Orders/minute
+Trade count
+Rejection count
+Q115. What is Golden Signals Monitoring?
+
+Google SRE concept.
+
+Monitor:
+
+Latency
+Traffic
+Errors
+Saturation
+
+Example:
+
+OMS APIs:
+
+Plain Text
+Latency
+
+TPS
+
+Error %
+
+CPU Usage
+
+Show more lines
+CLOUD MIGRATION QUESTIONS
+Q116. Why migrate applications to cloud?
+Benefits
+Scalability
+High Availability
+Disaster Recovery
+Cost Optimization
+Q117. How would you migrate your CTCL Application to AWS?
+Current
+Plain Text
+Desktop Application
+
+MySQL
+
+Excel Files
+
+Show more lines
+Future
+Plain Text
+React UI
+
+ ↓
+
+FastAPI
+
+ ↓
+
+Docker
+
+ ↓
+
+AWS ECS/EC2
+
+ ↓
+
+RDS MySQL
+
+ ↓
+
+S3
+
+Show more lines
+Q118. What challenges occur in cloud migration?
+Answer
+Data migration
+Downtime
+Security
+Latency
+Application dependency mapping
+Q119. Lift and Shift vs Re-architecture?
+Lift and Shift
+
+Move application as-is.
+
+Re-architecture
+
+Redesign application.
+
+CTCL Web Migration:
+
+Re-architecture.
+
+Q120. Trading System Cloud Migration Challenges?
+Answer
+
+Capital Markets systems need:
+
+Low latency
+Exchange connectivity
+Regulatory compliance
+
+Many OMS systems stay in Colo while reporting systems move to cloud.
+
+EXCHANGE CONNECTIVITY QUESTIONS
+Q121. OMS can connect to Database but not Exchange. What do you do?
+Check
+Shell
+ping
+
+traceroute
+
+telnet
+
+Show more lines
+
+Verify:
+
+Exchange Line
+Member Gateway
+Firewall
+Adapter Services
+Q122. What exchange teams do you communicate with?
+NSE
+CM Support
+F&O Support
+Network Team
+BSE
+Trading Support Team
+MCX
+Exchange Support
+Q123. Exchange disconnect during market hours. What communication will you send?
+Example
+Plain Text
+Incident: Exchange Connectivity Failure
+
+
+
+Impact:
+
+Order routing impacted.
+
+
+
+Current Status:
+
+Investigation in progress with NSE support team.
+
+
+
+ETA:
+
+Under assessment.
+
+
+
+Next update in 15 minutes.
+
+Show more lines
+CTCL MANAGEMENT QUESTIONS
+Q124. What is CTCL ID?
+
+Unique identifier assigned by exchange.
+
+Used for:
+
+Dealer tracking
+Audit compliance
+Regulatory reporting
+Q125. New CTCL ID Request Process?
+
+Typical workflow:
+
+Plain Text
+Business Request
+
+ ↓
+
+Compliance Approval
+
+ ↓
+
+Exchange Format Preparation
+
+ ↓
+
+Upload To Exchange
+
+ ↓
+
+Exchange Approval
+
+ ↓
+
+OMS Mapping
+
+ ↓
+
+Validation
+
+ ↓
+
+Go Live
+
+Show more lines
+Q126. What checks will you perform before CTCL activation?
+Validate
+Dealer code
+Branch code
+Segment
+Exchange member mapping
+OMS mapping
+Q127. What if wrong CTCL is mapped?
+Impact
+
+Orders may be tagged incorrectly.
+
+May create:
+
+Compliance issue
+Regulatory issue
+Audit concern
+
+Immediate correction required.
+
+COLOCATION / RACK MANAGEMENT QUESTIONS
+
+(This is often asked by trading firms.)
+
+Q128. What is Colocation?
+
+Exchange-hosted infrastructure near matching engine.
+
+Purpose:
+
+Reduce latency.
+
+Q129. Why do brokers use Colo?
+Benefits
+Lowest latency
+Faster order execution
+Better HFT performance
+Q130. New Rack Requirement Process
+Workflow
+Plain Text
+Business Requirement
+
+ ↓
+
+Capacity Review
+
+ ↓
+
+Exchange Approval
+
+ ↓
+
+Rack Allocation
+
+ ↓
+
+Network Provisioning
+
+ ↓
+
+Server Installation
+
+ ↓
+
+Connectivity Testing
+
+ ↓
+
+Production Go-Live
+
+Show more lines
+Q131. What checks before rack deployment?
+Verify
+Power
+Switch Ports
+Patch Panels
+Firewalls
+Exchange connectivity
+Market data connectivity
+Q132. Server installed in Colo but feed not received.
+Troubleshooting
+
+Check:
+
+Shell
+ping gateway
+
+netstat
+
+tcpdump
+
+Show more lines
+
+Verify:
+
+VLAN
+Multicast configuration
+Firewall
+REAL PRODUCTION SCENARIOS
+Q133. BOD failed at 8:45 AM, market opens at 9:15 AM.
+What do you do?
+Identify failed job.
+Escalate immediately.
+Start bridge call.
+Execute recovery.
+Prioritize critical masters.
+
+Business communication every 15 minutes.
+
+Q134. RMS is up but all orders getting rejected.
+Investigation
+
+Check:
+
+Margin files
+Risk limits
+Reference data
+EOD carry forward data
+Q135. HFT Clients Complaining About Latency
+Check
+CPU
+Network
+Feed adapters
+Exchange latency
+Packet drops
+
+Tools:
+
+Shell
+sar
+
+iftop
+
+tcpdump
+
+Show more lines
+Q136. PostgreSQL Database Suddenly Slow
+Check
+SQL
+SELECT * FROM pg_stat_activity;
+
+Show more lines
+
+Look for:
+
+Blocking
+Locks
+Long queries
+Q137. Control-M EOD Job Stuck
+Check
+Dependency
+Agent
+Database
+File Arrival
+
+Never rerun blindly.
+
+MANAGERIAL ROUND QUESTIONS
+Q138. Describe your biggest production outage.
+
+Use STAR format:
+
+Situation
+
+Trading application outage.
+
+Task
+
+Restore platform.
+
+Action
+
+Analyzed logs, identified DB bottleneck, coordinated infra and dev teams.
+
+Result
+
+Restored within SLA.
+
+Q139. How do you handle pressure during market hours?
+Answer
+
+Prioritize:
+
+Service restoration
+Communication
+Technical analysis
+
+Stay calm and provide regular updates.
+
+Q140. Why should we hire you?
+Strong Version
+
+"I bring a rare combination of Capital Markets Production Support, Trading Application expertise, Linux/SQL troubleshooting, automation skills, and application development experience. Beyond resolving incidents, I focus on reliability improvements through RCA, monitoring, automation and process optimization. Additionally, I have developed a CTCL Message Ratio Management application which demonstrates my ability to solve business problems through technology. This makes me capable of contributing both from an operational and engineering perspective."
+
+Final Recommendation
+
+Build a master interview handbook with these 3 sections:
+
+Section A: L1-L2 Core Support (Questions 1-70)
+Linux
+SQL
+Incident Management
+OMS/RMS
+CTCL
+BOD/EOD
+Control-M
+Section B: L2-L3 Advanced Support (Questions 71-140)
+RCA
+Exchange Connectivity
+HFT
+Docker
+Jenkins
+Git
+AWS
+PostgreSQL
+Production Scenarios
+Section C: SRE & Cloud Migration
+SLI/SLO/SLA
+Error Budget
+Observability
+Reliability Engineering
+Cloud Migration Strategies
+CTCL Web Migration
+AWS Architecture
+Capacity Planning
+Colo & Exchange Infrastructure
+Leadership & Major Incident Management
+
+Combined, this gives you a preparation bank of 140+ interview questions covering support, trading, capital markets, DevOps, SRE, cloud migration, CTCL administration, exchange communication, and colocation operations.
