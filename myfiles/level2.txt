@@ -1,1 +1,424 @@
+Linux Advanced Questions
+Q71. Difference between Soft Link and Hard Link
+Soft Link
+Shell
+ln -s file1 link1
 
+Show more lines
+
+Points to original file.
+
+Hard Link
+Shell
+ln file1 link1
+
+Show more lines
+
+Shares same inode.
+
+Q72. Find files larger than 1GB
+Shell
+find / -type f -size +1G
+
+Show more lines
+Q73. Find process using a port
+Shell
+lsof -i :8080
+
+Show more lines
+
+or
+
+Shell
+netstat -tulpn | grep 8080
+
+Show more lines
+Q74. Check server load
+Shell
+uptime
+
+``
+
+Show more lines
+
+Example Output:
+
+Plain Text
+load average: 3.2,2.8,2.5
+
+Show more lines
+Q75. Difference between grep and awk
+grep
+
+Search text.
+
+Shell
+grep ERROR app.log
+
+Show more lines
+awk
+
+Process columns.
+
+Shell
+awk '{print $1}'
+
+Show more lines
+SQL Advanced Questions
+Q76. Difference between WHERE and HAVING
+WHERE
+
+Filters before aggregation.
+
+SQL
+SELECT *
+
+FROM trades
+
+WHERE exchange='NSE';
+
+Show more lines
+HAVING
+
+Filters after aggregation.
+
+SQL
+SELECT client_code,
+
+COUNT(*)
+
+FROM trades
+
+GROUP BY client_code
+
+HAVING COUNT(*) > 10;
+
+Show more lines
+Q77. What is Normalization?
+Answer
+
+Process of reducing redundancy.
+
+Common forms:
+
+1NF
+2NF
+3NF
+Q78. What is Denormalization?
+Answer
+
+Combining tables to improve read performance.
+
+Common in reporting systems.
+
+Q79. Difference between Clustered and Non-Clustered Index
+Clustered
+
+Data stored physically in index order.
+
+Non-Clustered
+
+Separate index structure.
+
+Q80. How do you identify blocking sessions in PostgreSQL?
+SQL
+SELECT *
+
+FROM pg_stat_activity;
+
+Show more lines
+Q81. How do you identify long-running queries?
+PostgreSQL
+SQL
+SELECT pid,
+
+now()-query_start AS duration,
+
+query
+
+FROM pg_stat_activity
+
+WHERE state='active';
+
+Show more lines
+Q82. Find duplicate client records
+SQL
+SELECT client_id,
+
+COUNT(*)
+
+FROM clients
+
+GROUP BY client_id
+
+HAVING COUNT(*)>1;
+
+Show more lines
+Q83. Explain all Joins
+Inner Join
+SQL
+SELECT *
+
+FROM A
+
+INNER JOIN B
+
+ON A.id=B.id;
+
+Show more lines
+
+Returns matching rows.
+
+Left Join
+SQL
+SELECT *
+
+FROM A
+
+LEFT JOIN B
+
+ON A.id=B.id;
+
+Show more lines
+
+Returns all rows of A.
+
+Right Join
+SQL
+SELECT *
+
+FROM A
+
+RIGHT JOIN B
+
+ON A.id=B.id;
+
+Show more lines
+
+Returns all rows of B.
+
+Full Join
+SQL
+SELECT *
+
+FROM A
+
+FULL JOIN B
+
+ON A.id=B.id;
+
+Show more lines
+
+Returns everything.
+
+PostgreSQL Questions
+Q84. Difference between MySQL and PostgreSQL
+MySQL
+Faster reads
+Simpler
+PostgreSQL
+Advanced features
+Better complex queries
+Better JSON support
+Q85. PostgreSQL backup command
+Shell
+pg_dump -U postgres dbname > backup.sql
+
+Show more lines
+Q86. PostgreSQL restore
+Shell
+psql dbname < backup.sql
+
+Show more lines
+Docker Scenario Questions
+Q87. Container is running but application is inaccessible
+Check
+Shell
+docker ps
+
+
+
+docker logs container
+
+Show more lines
+
+Verify:
+
+Port mapping
+Firewall
+Application status
+Q88. Check docker resource usage
+Shell
+docker stats
+
+Show more lines
+Q89. View container configuration
+Shell
+docker inspect container_id
+
+Show more lines
+Q90. Remove unused images
+Shell
+docker image prune
+
+Show more lines
+Jenkins Scenario Questions
+Q91. Jenkins build succeeds but deployment fails
+Check
+Deployment scripts
+Permissions
+Server connectivity
+Environment variables
+Q92. How to trigger Jenkins pipeline automatically?
+Answer
+
+Using:
+
+Git Webhook
+Poll SCM
+Q93. What is Jenkins Agent?
+Answer
+
+Worker machine executing jobs.
+
+Git Advanced Questions
+Q94. Difference between Merge and Rebase
+Merge
+
+Preserves history.
+
+Shell
+git merge branch
+
+
+
+Show more lines
+Rebase
+
+Linear history.
+
+Shell
+git rebase main
+
+Show more lines
+Q95. Undo last commit
+Shell
+git reset --soft HEAD~1
+
+Show more lines
+Q96. Stash changes
+Shell
+git stash
+
+Show more lines
+
+Restore:
+
+Shell
+git stash pop
+
+Show more lines
+Control-M Real Scenarios
+Q97. Control-M Job Waiting Forever
+Check
+Dependencies
+Conditions
+Agent availability
+Q98. How do you restart failed job?
+Answer
+
+Analyze log first.
+
+Then:
+
+Plain Text
+Rerun from failed point
+
+Show more lines
+
+instead of restarting full batch.
+
+Q99. EOD Batch Failed at Step 15 of 20
+
+What will you do?
+
+Answer
+
+Check:
+
+Failure reason
+Impact analysis
+Restart capability
+
+Resume from Step 15 rather than Step 1.
+
+AWS Support Questions
+Q100. EC2 Server Suddenly Unreachable
+Check
+Security Group
+Instance status
+Network ACL
+CPU utilization
+
+AWS Commands:
+
+Shell
+aws ec2 describe-instances
+
+Show more lines
+CTCL Project Deep-Dive Questions
+Q101. What business problem did your CTCL tool solve?
+Answer
+
+Before application:
+
+Manual Excel processing
+High operational effort
+Human errors
+No audit trail
+
+After application:
+
+Automated calculations
+Historical tracking
+Validation controls
+Faster processing
+Q102. If 10 users use CTCL application simultaneously, what would you change?
+Answer
+
+Move from desktop architecture to:
+
+Plain Text
+React UI
+
+ ↓
+
+FastAPI
+
+ ↓
+
+MySQL
+
+Show more lines
+
+Deploy using Docker and AWS.
+
+Q103. What validations did you implement?
+Answer
+
+Examples:
+
+Client code validation
+CTCL format validation
+Duplicate checking
+Revision control checking
+Database consistency checks
+Q104. How would you improve the project further?
+Answer
+FastAPI migration
+Docker deployment
+Role-based access
+Audit dashboard
+Email alerts
+AWS hosting
+Automated reporting
