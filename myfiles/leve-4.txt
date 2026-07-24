@@ -1,1 +1,921 @@
+SECTION 1: REAL PRODUCTION INCIDENTS
+Question 1
+A critical trading application is down during market hours. How would you handle it?
+Ideal Answer
 
+My approach would be:
+
+Acknowledge incident immediately.
+Assess business impact.
+Verify application health.
+Check database connectivity.
+Review logs.
+Engage Infrastructure, DBA, Network and Development teams.
+Restore service as quickly as possible.
+Provide periodic updates to business stakeholders.
+Prepare RCA after stabilization.
+Practical Example
+
+At market open, OMS stopped processing orders.
+
+Investigation revealed:
+
+Database connection pool exhausted.
+New sessions could not connect.
+
+Temporary fix:
+
+Restarted application.
+Increased connection pool.
+
+Permanent fix:
+
+Development team fixed connection leak.
+Real Production Scenario
+
+Impact:
+
+Order entry unavailable.
+500+ traders affected.
+Exchange connectivity healthy.
+Interview Tip
+
+Always discuss:
+
+Technical resolution
+Business communication
+Post-incident improvement
+Question 2
+Users report slow order placement but application is not down. What will you check?
+Ideal Answer
+
+Investigate all layers:
+
+Application Layer
+
+Thread pool utilization
+Application logs
+
+Database Layer
+
+Query execution
+Blocking sessions
+
+Infrastructure Layer
+
+CPU
+Memory
+Network
+Linux Commands
+Shell
+top
+
+vmstat
+
+iostat
+
+sar
+
+Show more lines
+SQL Checks
+SQL
+SHOW PROCESSLIST;
+
+Show more lines
+
+PostgreSQL:
+
+SQL
+SELECT * FROM pg_stat_activity;
+
+Show more lines
+Production Scenario
+
+Order placement latency increased from:
+
+Plain Text
+50 ms → 1500 ms
+
+Show more lines
+
+Root Cause:
+
+Long-running SQL query blocking transactions.
+
+Interview Tip
+
+Never blame the application first.
+
+Analyze:
+
+Plain Text
+Application
+
+Database
+
+Infrastructure
+
+Network
+
+Show more lines
+SECTION 2: TRADING APPLICATION SUPPORT
+Question 3
+Explain OMS and RMS architecture.
+Ideal Answer
+
+OMS (Order Management System)
+
+Responsible for:
+
+New Orders
+Modify Orders
+Cancel Orders
+
+RMS (Risk Management System)
+
+Responsible for:
+
+Margin Validation
+Exposure Checks
+Position Limits
+
+Flow:
+
+Plain Text
+Client
+
+ ↓
+
+OMS
+
+ ↓
+
+RMS
+
+ ↓
+
+Exchange
+
+ ↓
+
+Confirmation
+
+Show more lines
+Practical Example
+
+User tries:
+
+Plain Text
+Buy 5000 shares
+
+Show more lines
+
+RMS checks:
+
+Available margin
+Exposure limit
+
+If validation fails:
+
+Order rejected before exchange.
+
+Interview Tip
+
+Always mention risk validation.
+
+Question 4
+Orders are rejected from exchange. What will you investigate?
+Ideal Answer
+
+Check:
+
+RMS validation
+Exchange response codes
+Member mapping
+CTCL mapping
+Client limits
+Production Scenario
+
+All dealer orders rejected.
+
+Root Cause:
+
+Incorrect CTCL mapping after deployment.
+
+Resolution
+
+Corrected mapping and restarted adapter.
+
+Question 5
+Exchange connectivity is down. How will you troubleshoot?
+Ideal Answer
+
+Check:
+
+Shell
+ping
+
+traceroute
+
+telnet
+
+netstat
+
+Show more lines
+
+Validate:
+
+Exchange line
+Member Gateway
+Firewall
+Routing
+Production Scenario
+
+NSE gateway unreachable.
+
+Root Cause:
+
+Firewall rule removed during maintenance.
+
+Resolution
+
+Firewall restored.
+
+SECTION 3: LINUX TROUBLESHOOTING
+Question 6
+Server CPU is 100%. What is your approach?
+Ideal Answer
+
+Check:
+
+Shell
+top
+
+htop
+
+Show more lines
+
+Identify process:
+
+Shell
+ps -eo pid,cmd,%cpu --sort=-%cpu
+
+Show more lines
+
+Investigate:
+
+Application process
+Batch jobs
+Log flooding
+Production Scenario
+
+Kafka consumer stuck in infinite loop.
+
+CPU:
+
+Plain Text
+100%
+
+
+
+Show more lines
+Resolution
+
+Restart process and fix code.
+
+Interview Tip
+
+Never kill processes without understanding impact.
+
+Question 7
+Disk utilization is 95%. What will you do?
+Answer
+Shell
+df -h
+
+du -sh *
+
+Show more lines
+
+Identify:
+
+Log growth
+Dump files
+Backup files
+Real Scenario
+
+Application logs grew to:
+
+Plain Text
+600 GB
+
+Show more lines
+
+due to debug logging.
+
+Resolution
+
+Archive logs and rotate.
+
+Question 8
+How do you troubleshoot memory issues?
+Commands
+Shell
+free -m
+
+top
+
+vmstat
+
+Show more lines
+Scenario
+
+Java application memory leak.
+
+Symptoms:
+
+Plain Text
+Slow response
+
+Frequent GC
+
+System lag
+
+Show more lines
+
+Resolution:
+
+Heap analysis and fix.
+
+SECTION 4: SQL / MYSQL / POSTGRESQL
+Question 9
+Database is up but application cannot connect.
+Ideal Answer
+
+Check:
+
+Connectivity
+
+Shell
+telnet dbserver 3306
+
+Show more lines
+
+Database status.
+
+Connection limits.
+
+Credentials.
+
+Firewall.
+
+Real Scenario
+
+Maximum connections reached.
+
+Solution
+
+Increase pool and optimize sessions.
+
+Question 10
+How do you identify blocking queries?
+PostgreSQL
+SQL
+SELECT *
+
+FROM pg_stat_activity;
+
+Show more lines
+MySQL
+SQL
+SHOW PROCESSLIST;
+
+Show more lines
+Scenario
+
+One reporting query blocked trading transactions.
+
+Impact
+
+Order processing delayed.
+
+Question 11
+Difference between INNER JOIN and LEFT JOIN?
+INNER JOIN
+
+Returns matching records.
+
+SQL
+SELECT *
+
+FROM clients c
+
+INNER JOIN trades t
+
+ON c.id=t.client_id;
+
+Show more lines
+LEFT JOIN
+
+Returns all records from left table.
+
+SQL
+SELECT *
+
+FROM clients c
+
+LEFT JOIN trades t
+
+ON c.id=t.client_id;
+
+Show more lines
+Interview Tip
+
+Expect follow-up questions with trading data examples.
+
+SECTION 5: NETWORK TROUBLESHOOTING
+Question 12
+Application cannot reach database server.
+Investigation
+Shell
+ping
+
+nslookup
+
+telnet
+
+netstat
+
+Show more lines
+
+Check:
+
+DNS
+Routing
+Firewall
+DB listener
+Production Scenario
+
+Firewall rule blocked port 5432.
+
+Resolution
+
+Firewall opened.
+
+Question 13
+How do you detect packet loss?
+Commands
+Shell
+ping
+
+mtr
+
+traceroute
+
+Show more lines
+Trading Example
+
+Market data delayed.
+
+Root Cause:
+
+Packet drops on switch port.
+
+SECTION 6: AWS PRODUCTION SUPPORT
+Question 14
+EC2 instance becomes unreachable.
+Checks
+Status Checks
+Security Groups
+Route Tables
+CPU utilization
+Disk space
+Scenario
+
+Production server inaccessible.
+
+Root Cause
+
+Disk became 100% full.
+
+Resolution
+
+Cleanup and volume expansion.
+
+Question 15
+How would you host your CTCL application on AWS?
+Architecture
+Plain Text
+Users
+
+ ↓
+
+Load Balancer
+
+ ↓
+
+EC2 / ECS
+
+ ↓
+
+FastAPI
+
+ ↓
+
+RDS MySQL
+
+ ↓
+
+S3 Backups
+
+Show more lines
+Interview Tip
+
+Discuss HA and scaling.
+
+SECTION 7: INCIDENT MANAGEMENT
+Question 16
+What is a P1 Incident?
+Answer
+
+Critical incident causing major business impact.
+
+Examples:
+
+Trading outage
+Exchange disconnect
+OMS unavailable
+Actions
+Incident bridge
+Stakeholder communication
+Technical recovery
+RCA
+Question 17
+How do you communicate during an outage?
+Example Communication
+Plain Text
+Incident: OMS Application Down
+
+
+
+Impact:
+
+Order placement impacted.
+
+
+
+Current Status:
+
+Investigation in progress.
+
+
+
+Teams Engaged:
+
+Application, DBA, Infrastructure.
+
+
+
+Next Update:
+
+15 Minutes.
+
+Show more lines
+Interview Tip
+
+Managers value communication as much as technical skills.
+
+SECTION 8: PROBLEM MANAGEMENT
+Question 18
+Difference between Incident and Problem Management?
+Incident
+
+Restore service quickly.
+
+Problem
+
+Find permanent fix.
+
+Example
+
+Incident:
+
+Application crashed.
+
+Problem:
+
+Memory leak causing crash.
+
+SECTION 9: CHANGE MANAGEMENT
+Question 19
+What checks do you perform before production deployment?
+Checklist
+CAB approval
+Rollback plan
+Backup verification
+Deployment steps
+Validation plan
+Stakeholder communication
+Production Example
+
+Trading release deployment.
+
+Backup taken before execution.
+
+SECTION 10: RELEASE MANAGEMENT
+Question 20
+Deployment failed midway. What will you do?
+Answer
+Stop deployment.
+Assess impact.
+Execute rollback.
+Restore prior version.
+Validate application.
+Communicate status.
+Interview Tip
+
+Never continue deployment if core validation fails.
+
+SECTION 11: API SUPPORT
+Question 21
+API suddenly starts returning 500 errors. How do you investigate?
+Checks
+
+Application Logs
+
+Shell
+tail -f api.log
+
+Show more lines
+
+Database Connectivity
+
+API response times.
+
+Infrastructure metrics.
+
+Scenario
+
+Database schema changed.
+
+API still expected old column.
+
+Result:
+
+Plain Text
+500 Internal Server Error
+
+Show more lines
+Question 22
+How do you monitor APIs?
+KPIs
+Availability
+Latency
+Error Rate
+Throughput
+Tools
+Kibana
+Grafana
+ELK
+CloudWatch
+SECTION 12: CONTROL-M
+Question 23
+Daily BOD job failed. What will you do?
+Investigation
+
+Check:
+
+File arrival
+Dependency jobs
+Database status
+Agent health
+Scenario
+
+Margin file delayed.
+
+BOD failed.
+
+Manual recovery executed.
+
+Question 24
+Control-M Job waits indefinitely.
+Cause
+Missing predecessor
+Missing condition
+Agent issue
+Resolution
+
+Correct dependency and rerun.
+
+SECTION 13: HIGH AVAILABILITY
+Question 25
+What is High Availability?
+Answer
+
+Designing systems to eliminate single points of failure.
+
+Examples
+
+Plain Text
+Load Balancers
+
+Primary-Secondary Databases
+
+Multiple Application Nodes
+
+Show more lines
+Trading Example
+
+OMS running on active-active cluster.
+
+SECTION 14: DISASTER RECOVERY
+Question 26
+Primary DC is unavailable. What will you do?
+Steps
+Trigger DR procedure.
+Validate DR services.
+Switch traffic.
+Validate trading flows.
+Inform stakeholders.
+Scenario
+
+Primary data center power outage.
+
+DR activated within SLA.
+
+Question 27
+Difference between RPO and RTO?
+RPO
+
+Maximum acceptable data loss.
+
+RTO
+
+Maximum acceptable downtime.
+
+Example:
+
+Plain Text
+RPO = 15 Minutes
+
+RTO = 1 Hour
+
+Show more lines
+SECTION 15: RCA
+Question 28
+Explain an RCA you prepared.
+Ideal Answer
+
+Incident:
+
+Order Placement Failure
+
+Impact:
+
+350 users affected
+
+Root Cause:
+
+Connection pool exhaustion
+
+Resolution:
+
+Restarted service
+
+Preventive Action:
+
+Increased pool
+Added monitoring
+Fixed application logic
+Interview Tip
+
+Always structure RCA as:
+
+Plain Text
+What Happened
+
+Impact
+
+Root Cause
+
+Resolution
+
+Prevention
+
+Show more lines
+SECTION 16: HFT SUPPORT
+Question 29
+HFT client reports increased latency. What will you check?
+Investigation
+
+Network
+
+Shell
+iftop
+
+sar
+
+Show more lines
+
+Exchange Round Trip
+
+Feed latency
+
+Server metrics
+
+Scenario
+
+Market data adapter overloaded.
+
+Latency increased:
+
+Plain Text
+1 ms → 20 ms
+
+Show more lines
+Resolution
+
+Scaled adapter.
+
+SECTION 17: CTCL & EXCHANGE OPERATIONS
+Question 30
+Business requests a new CTCL ID. What steps will you follow?
+Process
+Plain Text
+Business Request
+
+↓
+
+Compliance Approval
+
+↓
+
+Exchange Template Preparation
+
+↓
+
+Upload to Exchange
+
+↓
+
+Approval Received
+
+↓
+
+OMS Mapping
+
+↓
+
+Testing
+
+↓
+
+Production Activation
+
+Show more lines
+Risk
+
+Incorrect mapping can create compliance issues.
+
+Question 31
+New exchange colocation rack requested. How would you handle it?
+Steps
+Plain Text
+Capacity Planning
+
+↓
+
+Exchange Approval
+
+↓
+
+Rack Allocation
+
+↓
+
+Network Configuration
+
+↓
+
+Server Installation
+
+↓
+
+Connectivity Validation
+
+↓
+
+Go Live
+
+Show more lines
+Checks
+Power
+Switch ports
+Exchange connectivity
+Market data feed
+Firewall rules
+Final Manager Round Question
+Why should we hire you?
+Ideal Answer
+
+"I bring over 4 years of Capital Markets production support experience supporting mission-critical trading applications. My strengths include Incident Management, RCA, Linux, SQL, PostgreSQL, AWS, Docker, Jenkins, Control-M and deployment management. Beyond support, I focus on reliability, automation and preventive improvements. I have also developed a CTCL Message Ratio Management application which demonstrates my ability to solve business problems through technology. This combination of support, troubleshooting, automation and domain expertise allows me to add value from day one."
