@@ -1,1 +1,927 @@
+SECTION 1: DATABASE FUNDAMENTALS
+Q1. Difference between MySQL and PostgreSQL?
+Answer
+MySQL
+Faster for simple read operations
+Widely used in web applications
+Simpler administration
+PostgreSQL
+Enterprise-grade database
+Better concurrency handling
+Advanced indexing
+Better JSON support
+Strong ACID compliance
+Production Example
 
+Trading applications use PostgreSQL because many users simultaneously place orders and update positions.
+
+Q2. What is a Primary Key?
+Answer
+
+Uniquely identifies a row.
+
+SQL
+CREATE TABLE client_master
+
+(
+
+client_id INT PRIMARY KEY,
+
+client_name VARCHAR(100)
+
+);
+
+Show more lines
+Example
+Plain Text
+Client ID = 1001
+
+Show more lines
+
+Cannot be duplicated.
+
+Q3. What is a Foreign Key?
+Answer
+
+Maintains referential integrity.
+
+SQL
+CREATE TABLE trades
+
+(
+
+trade_id INT,
+
+client_id INT,
+
+FOREIGN KEY(client_id)
+
+REFERENCES client_master(client_id)
+
+);
+
+Show more lines
+Example
+
+Trade cannot exist if client does not exist.
+
+Q4. What is Unique Constraint?
+SQL
+CREATE TABLE dealers
+
+(
+
+dealer_code VARCHAR(20) UNIQUE
+
+);
+
+Show more lines
+Example
+
+Dealer code must be unique.
+
+Q5. What is NOT NULL?
+SQL
+client_name VARCHAR(100) NOT NULL
+
+Show more lines
+
+Prevents blank values.
+
+Q6. What is CHECK Constraint?
+SQL
+CREATE TABLE orders
+
+(
+
+quantity INT CHECK(quantity > 0)
+
+);
+
+Show more lines
+Example
+
+Negative quantity order not allowed.
+
+Q7. Difference Between DELETE, TRUNCATE and DROP
+DELETE
+SQL
+DELETE FROM orders;
+
+Show more lines
+Removes rows
+Can rollback
+TRUNCATE
+SQL
+TRUNCATE TABLE orders;
+
+Show more lines
+Faster
+Removes all rows
+DROP
+SQL
+DROP TABLE orders;
+
+Show more lines
+Removes entire table
+SECTION 2: JOINS
+Q8. Explain INNER JOIN
+Example
+
+Clients with trades.
+
+SQL
+SELECT c.client_name,
+
+t.trade_id
+
+
+
+FROM clients c
+
+INNER JOIN trades t
+
+ON c.client_id=t.client_id;
+
+Show more lines
+
+Returns matching records.
+
+Q9. Explain LEFT JOIN
+Example
+
+All clients including those with no trades.
+
+SQL
+SELECT c.client_name,
+
+t.trade_id
+
+
+
+FROM clients c
+
+LEFT JOIN trades t
+
+ON c.client_id=t.client_id;
+
+Show more lines
+Q10. Find clients who have never traded
+SQL
+SELECT c.client_id
+
+
+
+FROM clients c
+
+LEFT JOIN trades t
+
+ON c.client_id=t.client_id
+
+
+
+WHERE t.trade_id IS NULL;
+
+Show more lines
+Q11. FULL OUTER JOIN
+SQL
+SELECT *
+
+
+
+FROM client_master c
+
+FULL JOIN trades t
+
+
+
+ON c.client_id=t.client_id;
+
+Show more lines
+
+Returns everything from both tables.
+
+Q12. SELF JOIN Example
+
+Find manager-employee relationships.
+
+SQL
+SELECT a.emp_name,
+
+b.emp_name as manager
+
+
+
+FROM employee a
+
+LEFT JOIN employee b
+
+ON a.manager_id=b.emp_id;
+
+Show more lines
+SECTION 3: AGGREGATION QUESTIONS
+Q13. Top 10 clients by traded volume
+SQL
+SELECT client_code,
+
+SUM(volume) total_volume
+
+
+
+FROM trades
+
+
+
+GROUP BY client_code
+
+
+
+ORDER BY total_volume DESC
+
+
+
+LIMIT 10;
+
+Show more lines
+Q14. Total turnover per client
+SQL
+SELECT client_code,
+
+SUM(turnover)
+
+
+
+FROM trades
+
+
+
+GROUP BY client_code;
+
+Show more lines
+Q15. Find duplicate CTCL IDs
+SQL
+SELECT ctcl_id,
+
+COUNT(*)
+
+
+
+FROM ctcl_master
+
+
+
+GROUP BY ctcl_id
+
+
+
+HAVING COUNT(*) > 1;
+
+Show more lines
+SECTION 4: REAL CAPITAL MARKET QUERIES
+Q16. Find today's rejected orders
+SQL
+SELECT *
+
+
+
+FROM orders
+
+
+
+WHERE order_status='REJECTED'
+
+AND trade_date=CURRENT_DATE;
+
+Show more lines
+Q17. Find dealer generating highest messages
+SQL
+SELECT dealer_code,
+
+COUNT(*)
+
+
+
+FROM order_messages
+
+
+
+GROUP BY dealer_code
+
+
+
+ORDER BY COUNT(*) DESC;
+
+Show more lines
+Q18. Find clients crossing risk limit
+SQL
+SELECT client_code,
+
+SUM(exposure)
+
+
+
+FROM positions
+
+
+
+GROUP BY client_code
+
+
+
+HAVING SUM(exposure) > 10000000;
+
+
+
+Show more lines
+SECTION 5: SUBQUERY QUESTIONS
+Q19. Find highest traded client
+SQL
+SELECT *
+
+
+
+FROM clients
+
+
+
+WHERE client_id=
+
+(
+
+SELECT client_id
+
+
+
+FROM trades
+
+
+
+GROUP BY client_id
+
+
+
+ORDER BY SUM(turnover) DESC
+
+LIMIT 1
+
+);
+
+Show more lines
+Q20. Find second highest salary
+SQL
+SELECT MAX(salary)
+
+
+
+FROM employee
+
+
+
+WHERE salary <
+
+(
+
+SELECT MAX(salary)
+
+
+
+FROM employee
+
+);
+
+Show more lines
+SECTION 6: WINDOW FUNCTION QUESTIONS
+Q21. Rank clients by turnover
+SQL
+SELECT client_code,
+
+SUM(turnover),
+
+
+
+RANK() OVER
+
+(
+
+ORDER BY SUM(turnover) DESC
+
+)
+
+
+
+FROM trades
+
+
+
+GROUP BY client_code;
+
+Show more lines
+Q22. Row Number Example
+SQL
+SELECT trade_id,
+
+
+
+ROW_NUMBER() OVER
+
+(
+
+ORDER BY trade_time
+
+)
+
+
+
+FROM trades;
+
+Show more lines
+SECTION 7: INDEX QUESTIONS
+Q23. What is Index?
+Answer
+
+Improves query performance.
+
+SQL
+CREATE INDEX idx_client
+
+ON trades(client_code);
+
+Show more lines
+Q24. When should index not be used?
+Answer
+
+Avoid on:
+
+Small tables
+Frequently updated columns
+Q25. Production Scenario
+
+Order search taking:
+
+Plain Text
+8 seconds
+
+Show more lines
+
+Root Cause:
+
+No index on client_code.
+
+After Index:
+
+Plain Text
+150 milliseconds
+
+Show more lines
+SECTION 8: STORED PROCEDURE QUESTIONS
+Q26. What is Stored Procedure?
+
+Reusable SQL logic.
+
+MySQL Example
+SQL
+DELIMITER //
+
+
+
+CREATE PROCEDURE get_client()
+
+
+
+BEGIN
+
+
+
+SELECT *
+
+FROM clients;
+
+
+
+END//
+
+
+
+DELIMITER ;
+
+Show more lines
+Q27. Production Usage
+
+Daily turnover calculation.
+
+Instead of application code:
+
+Procedure performs aggregation.
+
+SECTION 9: FUNCTIONS
+Q28. What is Function?
+
+Returns a value.
+
+SQL
+CREATE FUNCTION calculate_tax
+
+(amount DECIMAL)
+
+
+
+RETURNS DECIMAL
+
+Show more lines
+SECTION 10: TRIGGERS
+Q29. What is Trigger?
+
+Automatically executes on event.
+
+SQL
+CREATE TRIGGER audit_trade
+
+AFTER INSERT
+
+ON trades
+
+Show more lines
+Production Example
+
+Every order modification recorded automatically.
+
+SECTION 11: TRANSACTION QUESTIONS
+Q30. What is Transaction?
+
+Group of operations executed together.
+
+SQL
+BEGIN;
+
+
+
+UPDATE accounts
+
+SET balance=balance-1000
+
+
+
+WHERE id=1;
+
+
+
+UPDATE accounts
+
+SET balance=balance+1000
+
+
+
+WHERE id=2;
+
+
+
+COMMIT;
+
+Show more lines
+Q31. Explain ACID Properties
+Atomicity
+
+Everything succeeds or fails.
+
+Consistency
+
+Data remains valid.
+
+Isolation
+
+Transactions separated.
+
+Durability
+
+Data remains after commit.
+
+SECTION 12: DEADLOCK QUESTIONS
+Q32. What is Deadlock?
+
+Two transactions waiting for each other.
+
+Example
+
+Transaction A locks table A.
+
+Transaction B locks table B.
+
+Each waits for other lock.
+
+Production Scenario
+
+Order updates and risk updates causing deadlock.
+
+Q33. How do you identify deadlock in PostgreSQL?
+SQL
+SELECT *
+
+FROM pg_stat_activity;
+
+Show more lines
+Q34. How do you identify deadlock in MySQL?
+SQL
+SHOW ENGINE INNODB STATUS;
+
+Show more lines
+SECTION 13: BLOCKING SESSION TROUBLESHOOTING
+Q35. PostgreSQL Blocking Sessions
+SQL
+SELECT pid,
+
+query,
+
+state
+
+
+
+FROM pg_stat_activity;
+
+Show more lines
+Production Scenario
+
+Large reporting query blocked trading transactions.
+
+Impact:
+
+Order placement delayed.
+
+SECTION 14: PERFORMANCE TROUBLESHOOTING
+Q36. Application Slow. What DB Checks?
+
+Check:
+
+SQL
+SHOW PROCESSLIST;
+
+Show more lines
+
+Look for:
+
+Long queries
+Locks
+Blocking
+Full table scans
+Q37. PostgreSQL Long Running Queries
+SQL
+SELECT pid,
+
+query,
+
+now()-query_start
+
+
+
+FROM pg_stat_activity;
+
+Show more lines
+Q38. Find Missing Indexes
+
+Look for:
+
+Plain Text
+Sequential scans
+
+Large result sets
+
+Repeated queries
+
+Show more lines
+SECTION 15: DATABASE INCIDENTS
+Q39. Database Connection Pool Exhausted
+Symptoms
+Application timeout
+Login failure
+API failure
+Investigation
+SQL
+SHOW PROCESSLIST;
+
+Show more lines
+Root Cause
+
+Connections not released.
+
+Q40. Database at 100% CPU
+Checks
+
+MySQL
+
+SQL
+SHOW FULL PROCESSLIST;
+
+Show more lines
+
+PostgreSQL
+
+SQL
+SELECT *
+
+FROM pg_stat_activity;
+
+Show more lines
+SECTION 16: POSTGRESQL ADMIN QUESTIONS
+Q41. Check Active Sessions
+SQL
+SELECT *
+
+FROM pg_stat_activity;
+
+Show more lines
+Q42. Kill Session
+Q43. Check Database Size
+SQL
+SELECT pg_size_pretty
+
+(
+
+pg_database_size('tradingdb')
+
+);
+
+Show more lines
+Q44. Backup PostgreSQL
+Shell
+pg_dump -U postgres tradingdb > backup.sql
+
+Show more lines
+Q45. Restore PostgreSQL
+Shell
+psql tradingdb < backup.sql
+
+Show more lines
+SECTION 17: MYSQL ADMIN QUESTIONS
+Q46. Check Running Queries
+SQL
+SHOW PROCESSLIST;
+
+Show more lines
+Q47. Kill Query
+SQL
+KILL process_id;
+
+Show more lines
+Q48. View Table Structure
+SQL
+DESC trades;
+
+Show more lines
+Q49. Database Backup
+Shell
+mysqldump -u root -p tradingdb > backup.sql
+
+
+
+Show more lines
+Q50. Restore Backup
+Shell
+mysql -u root -p tradingdb < backup.sql
+
+Show more lines
+SECTION 18: REAL PRODUCTION DATABASE SCENARIOS
+Q51. Market Open at 9:15 AM, Orders Not Flowing
+Investigation
+OMS check
+RMS check
+Database connections
+Exchange gateway
+
+Root Cause:
+
+Connection pool exhausted.
+
+Q52. Position Data Not Updating
+Investigation
+SQL
+SELECT *
+
+FROM positions;
+
+Show more lines
+
+Batch failed.
+
+Control-M dependency issue.
+
+Q53. Dealer Complains Trade Not Visible
+Investigation
+SQL
+SELECT *
+
+FROM trades
+
+WHERE order_id='12345';
+
+Show more lines
+
+Find transaction flow.
+
+Q54. CTCL Mapping Missing
+Query
+SQL
+SELECT *
+
+
+
+FROM ctcl_mapping
+
+
+
+WHERE dealer_code='D102';
+
+Show more lines
+Q55. Duplicate Trades Generated
+Query
+SQL
+SELECT trade_no,
+
+COUNT(*)
+
+
+
+FROM trades
+
+
+
+GROUP BY trade_no
+
+
+
+HAVING COUNT(*) > 1;
+
+Show more lines
+SECTION 19: MOST ASKED PRODUCTION SUPPORT DATABASE QUESTION
+Q56. A Business User Says "Application Is Slow". What Database Checks Will You Perform?
+Ideal Interview Answer
+
+I would check:
+
+Step 1
+
+Active Sessions
+
+MySQL
+
+SQL
+SHOW PROCESSLIST;
+
+Show more lines
+
+PostgreSQL
+
+SQL
+SELECT *
+
+FROM pg_stat_activity;
+
+Show more lines
+Step 2
+
+Identify Long Queries
+
+Step 3
+
+Check Blocking Sessions
+
+Step 4
+
+Check CPU Usage
+
+Step 5
+
+Check Missing Indexes
+
+Step 6
+
+Analyze Execution Plan
+
+SQL
+EXPLAIN ANALYZE
+
+SELECT * FROM trades;
+
+Show more lines
+Step 7
+
+Check Database Logs
+
+Step 8
+
+Correlate with Application Logs
+
+Real Production Example
+
+At Kotak/Edelweiss-type trading environments:
+
+Traders reported order delays.
+Application healthy.
+Database CPU reached 95%.
+Reporting query executed without index.
+Query blocked order processing.
+Index created.
+Response time reduced from 12 seconds to less than 200 ms.
+Manager Round Special Question
+Q57. What is your approach to Database Troubleshooting in Production?
+Ideal Answer
+
+"My troubleshooting approach is structured. First, I identify whether the issue is connectivity, performance, locking, blocking, storage or query-related. I use tools like SHOW PROCESSLIST, pg_stat_activity, EXPLAIN ANALYZE, application logs and infrastructure metrics to isolate the root cause. My priority is always service restoration, followed by RCA and preventive improvements such as indexing, query optimization, monitoring and capacity planning. In trading environments, I focus heavily on minimizing downtime and ensuring that order flow, risk validation and market data processing remain unaffected."
