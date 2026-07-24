@@ -1,1 +1,552 @@
+Top 50 Production Support Interview Questions & Answers
+INCIDENT MANAGEMENT
+Q1. Tell me about a P1 production incident you handled.
+Answer
 
+A P1 incident occurred when the trading application became inaccessible during market hours.
+
+Actions:
+
+Created bridge call
+Engaged infra, network and application teams
+Verified application health
+Checked CPU, memory, network utilization
+Reviewed logs in Kibana
+Identified database connection exhaustion
+Restarted affected services
+Restored service within SLA
+Real Example
+
+Trading users reported order placement failure at 9:17 AM.
+
+Root Cause:
+
+Database connection pool exhausted due to unoptimized query.
+
+Q2. What is your approach for incident management?
+Answer
+
+Follow ITIL:
+
+Incident Identification
+Prioritization
+Assignment
+Investigation
+Resolution
+Validation
+Closure
+RCA
+Q3. Difference between Incident and Problem?
+Answer
+
+Incident:
+
+Unexpected service interruption.
+
+Example:
+
+Trading API stopped responding.
+
+Problem:
+
+Root cause of recurring incidents.
+
+Example:
+
+Memory leak causing repeated API crashes.
+
+Q4. What is MTTR?
+Answer
+
+Mean Time To Resolve.
+
+Formula:
+
+Plain Text
+Total Resolution Time / Number of Incidents
+
+Show more lines
+Q5. What information should an RCA include?
+Answer
+Incident Summary
+Timeline
+Root Cause
+Business Impact
+Resolution
+Preventive Actions
+LINUX QUESTIONS
+Q6. Server is slow. What will you do?
+Answer
+
+Check:
+
+Shell
+top
+
+htop
+
+vmstat
+
+iostat
+
+free -m
+
+df -h
+
+Show more lines
+
+Verify:
+
+CPU
+Memory
+IO wait
+Disk utilization
+Q7. How do you identify a process consuming high CPU?
+Shell
+top
+
+ps -ef
+
+ps aux --sort=-%cpu
+
+Show more lines
+Q8. How do you find a process listening on port 8080?
+Shell
+netstat -tulpn | grep 8080
+
+
+
+or
+
+
+
+ss -tulpn | grep 8080
+
+Show more lines
+Q9. How do you check memory utilization?
+Shell
+free -m
+
+vmstat
+
+top
+
+Show more lines
+Q10. How do you find large files?
+Shell
+find / -type f -size +500M
+
+Show more lines
+REAL INCIDENT
+Q11. Log filesystem reached 100%.
+Answer
+
+Symptoms:
+
+Application crash.
+
+Investigation:
+
+Shell
+df -h
+
+du -sh *
+
+Show more lines
+
+Findings:
+
+Application log rotation failed.
+
+Action:
+
+Cleanup logs and configure logrotate.
+
+SQL QUESTIONS
+Q12. Difference between INNER JOIN and LEFT JOIN?
+Answer
+
+INNER JOIN:
+
+Returns matching records only.
+
+LEFT JOIN:
+
+Returns all left table records.
+
+Q13. Find second highest salary.
+SQL
+SELECT MAX(SALARY)
+
+FROM EMPLOYEE
+
+WHERE SALARY <
+
+(
+
+SELECT MAX(SALARY)
+
+FROM EMPLOYEE
+
+);
+
+Show more lines
+Q14. How do you identify slow SQL queries?
+Answer
+
+Check:
+
+Execution plan
+Full table scan
+Missing indexes
+
+MySQL:
+
+SQL
+EXPLAIN SELECT * FROM trade_orders;
+
+Show more lines
+Q15. What is an Index?
+Answer
+
+Database structure used to speed up data retrieval.
+
+MYSQL QUESTIONS
+Q16. How do you check active connections in MySQL?
+SQL
+SHOW PROCESSLIST;
+
+Show more lines
+Q17. Database is slow. How will you troubleshoot?
+Answer
+
+Check:
+
+SQL
+SHOW PROCESSLIST;
+
+Show more lines
+
+Then verify:
+
+Locks
+Long running queries
+Indexes
+CPU usage
+Q18. How do you identify locked queries?
+SQL
+SHOW ENGINE INNODB STATUS;
+
+Show more lines
+Q19. Explain MySQL Replication.
+Answer
+
+Primary database sends changes to replica servers through binary logs.
+
+Q20. Real MySQL Incident?
+Example
+
+Trading application response increased from 2 sec to 30 sec.
+
+Root Cause:
+
+Missing index.
+
+Resolution:
+
+Index added on trade_id column.
+
+POSTGRESQL QUESTIONS
+Q21. Check active sessions.
+SQL
+SELECT * FROM pg_stat_activity;
+
+Show more lines
+Q22. Check locks.
+SQL
+SELECT *
+
+FROM pg_locks;
+
+Show more lines
+Q23. Check database size.
+SQL
+SELECT pg_size_pretty(
+
+pg_database_size('tradingdb')
+
+);
+
+Show more lines
+Q24. PostgreSQL performance issue.
+Answer
+
+Check:
+
+SQL
+EXPLAIN ANALYZE
+
+Show more lines
+
+Investigate:
+
+Sequential scans
+Deadlocks
+Missing index
+Q25. Real PostgreSQL Incident
+
+Large report query caused database slowdown.
+
+Solution:
+
+Created composite index and optimized query.
+
+NETWORK QUESTIONS
+Q26. Difference between TCP and UDP?
+Answer
+
+TCP:
+
+Reliable.
+
+UDP:
+
+Fast but unreliable.
+
+Used heavily in market data feeds.
+
+Q27. How do you test application connectivity?
+Shell
+telnet host port
+
+
+
+nc -zv host port
+
+Show more lines
+Q28. Difference between DNS and IP?
+Answer
+
+DNS resolves hostname to IP.
+
+Q29. How do you troubleshoot network latency?
+Commands
+Shell
+ping
+
+traceroute
+
+mtr
+
+Show more lines
+Q30. User cannot access application.
+Investigation
+Shell
+ping
+
+nslookup
+
+telnet
+
+curl
+
+Show more lines
+HFT & TRADING QUESTIONS
+Q31. What is FIX Protocol?
+Answer
+
+Standard messaging protocol used for electronic trading.
+
+Q32. What is TBT Market Data?
+Answer
+
+Tick By Tick feed giving every market update.
+
+Q33. Difference between OMS and RMS?
+OMS
+
+Order Management System.
+
+RMS
+
+Risk Management System.
+
+Q34. What is Order Lifecycle?
+Flow
+Plain Text
+Client
+
+→ OMS
+
+→ RMS
+
+→ Exchange
+
+→ Confirmation
+
+Show more lines
+Q35. Real Trading Incident
+
+Order rejection spikes.
+
+Root Cause:
+
+Exchange gateway session down.
+
+Resolution:
+
+Reconnected session and verified order flow.
+
+AWS QUESTIONS
+Q36. Difference between EC2 and S3?
+EC2
+
+Compute server.
+
+S3
+
+Object storage.
+
+Q37. EC2 server inaccessible.
+Checks
+Shell
+ping
+
+security group
+
+NACL
+
+system logs
+
+disk full
+
+Show more lines
+Q38. Application suddenly down in AWS.
+Investigation
+EC2 health
+Security Group
+Load Balancer
+Application logs
+Q39. What is Auto Scaling?
+Answer
+
+Automatically adjusts instance count based on load.
+
+Q40. What is CloudWatch?
+Answer
+
+AWS monitoring service.
+
+API SUPPORT QUESTIONS
+Q41. API returning 500 error. What will you do?
+Steps
+Shell
+curl -v
+
+Show more lines
+
+Check:
+
+Logs
+Database
+CPU
+Services
+Q42. Difference between 200, 400, 404, 500?
+Answer
+Plain Text
+200 Success
+
+400 Bad Request
+
+404 Not Found
+
+500 Internal Server Error
+
+Show more lines
+DEPLOYMENT QUESTIONS
+Q43. Steps before Production Deployment?
+Answer
+Change approved
+Backup completed
+Rollback plan available
+UAT sign-off
+Health checks
+Q44. What is rollback?
+Answer
+
+Restore previous stable version.
+
+CONTROL-M QUESTIONS
+Q45. Job failed in Control-M. What do you do?
+Answer
+
+Check
+
+Exit code
+Logs
+Dependencies
+File availability
+INFRASTRUCTURE QUESTIONS
+Q46. Server CPU reached 100%.
+Investigation
+Shell
+top
+
+sar
+
+vmstat
+
+Show more lines
+
+Find offending process.
+
+Q47. Disk reached 100%.
+Fix
+Shell
+df -h
+
+du -sh *
+
+Show more lines
+
+Clean logs.
+
+Q48. Application works in UAT but not Production.
+Checks
+Configuration
+Firewall
+Ports
+Database
+Variables
+Q49. What is High Availability?
+Answer
+
+System continues operating despite component failure.
+
+Example:
+
+Active-Passive cluster.
+
+Q50. Tell me about your biggest production achievement.
+Sample Answer
+
+At Edelweiss Securities, I automated repetitive operational activities using Control-M and scripting, reducing manual intervention by nearly 60%. I also supported HFT and trading applications with 99.9% availability, reduced incident recurrence through RCA, and helped improve MTTR through operational runbooks and proactive monitoring.
+
+Most Expected 2026 Interview Scenario
+
+Scenario: Trading Application Down at Market Open (9:15 AM)
+
+What interviewer expects
+Raise P1 Incident
+Join bridge call
+Check application logs
+Check Linux server
+Verify database
+Verify network connectivity
+Check market feed
+Communicate to stakeholders
+Restore service
+Perform RCA
+Sample Answer
+
+During market opening, traders reported orders were not getting executed. I immediately declared a P1 incident, initiated a bridge call with Infrastructure, Network, DBA, and Application teams. Linux health checks showed the application was healthy, but database connections were exhausted. We temporarily increased the connection pool limit and restarted affected services. Trading resumed within 15 minutes. RCA identified a slow-running query introduced in the previous release. A permanent query optimization and monitoring alert were implemented to prevent recurrence.
