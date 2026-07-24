@@ -1,1 +1,1256 @@
+In interviews, expect questions from 5 major areas:
 
+1. Application Support / Production Support
+Q1. Explain your current role at Edelweiss Securities.
+
+Answer:
+
+Currently, I am working as Assistant Manager Application Support at Edelweiss Securities, supporting mission-critical trading applications. My responsibilities include:
+
+Monitoring production applications.
+Performing BOD and EOD activities.
+Incident and Problem Management.
+Production, UAT and DR deployments.
+Supporting HFT-related applications such as FastFeed, UDP and TBT adapters.
+RCA preparation for critical incidents.
+Coordinating with Infrastructure, Development and Business teams.
+Managing SLA adherence and availability.
+
+I help maintain close to 99.9% application availability.
+
+Q2. What do you do when a critical production issue occurs?
+
+Answer Framework:
+
+Acknowledge the incident.
+Assess business impact.
+Check monitoring alerts.
+Analyze application logs.
+Validate infrastructure health.
+Check database connectivity.
+Engage relevant teams.
+Restore service ASAP.
+Perform RCA.
+Implement preventive measures.
+
+Example:
+
+"If order placement suddenly stops, I first verify application status, database connectivity, exchange connectivity, server resources and logs. If needed, I engage infrastructure and development teams while providing regular business updates until service restoration."
+
+Q3. Difference between Incident and Problem Management?
+Incident Management
+
+Goal: Restore service quickly.
+
+Example:
+
+Trading application stopped responding.
+
+Problem Management
+
+Goal: Identify root cause and permanently resolve recurring incidents.
+
+Example:
+
+Application crash repeatedly due to memory leak.
+
+Q4. Explain RCA.
+
+Answer:
+
+RCA is a structured process used to identify the underlying cause of an incident rather than treating only symptoms.
+
+My RCA includes:
+
+Incident timeline
+Root cause
+Business impact
+Resolution steps
+Corrective actions
+Preventive actions
+Q5. What is MTTR?
+
+Answer:
+
+MTTR stands for Mean Time To Resolve or Mean Time To Recover.
+
+Formula:
+
+Plain Text
+MTTR = Total Resolution Time / Number of Incidents
+
+Show more lines
+
+Reducing MTTR improves application availability and SLA compliance.
+
+2. Linux Interview Questions
+Q1. Which Linux commands do you use daily?
+Shell
+top
+
+htop
+
+ps -ef
+
+grep
+
+tail -f
+
+df -h
+
+du -sh
+
+netstat -tulnp
+
+ss -tulnp
+
+find
+
+chmod
+
+chown
+
+awk
+
+sed
+
+vi
+
+Show more lines
+Q2. How do you identify a high CPU issue?
+Shell
+top
+
+Show more lines
+
+or
+
+Shell
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu
+
+Show more lines
+
+Find the process consuming CPU and investigate logs.
+
+Q3. How do you identify disk space issues?
+Shell
+df -h
+
+Show more lines
+
+Check folder usage:
+
+Shell
+du -sh *
+
+Show more lines
+Q4. How do you monitor logs in real time?
+Shell
+tail -f application.log
+
+Show more lines
+Q5. How do you check whether a port is listening?
+Shell
+netstat -tulnp
+
+Show more lines
+
+or
+
+Shell
+ss -tulnp
+
+Show more lines
+3. SQL Interview Questions
+Q1. Find duplicate CTCL IDs.
+SQL
+SELECT ctcl_id,
+
+COUNT(*)
+
+FROM client_data
+
+GROUP BY ctcl_id
+
+HAVING COUNT(*) > 1;
+
+Show more lines
+Q2. Difference between INNER JOIN and LEFT JOIN?
+INNER JOIN
+
+Returns matching rows only.
+
+LEFT JOIN
+
+Returns all records from left table and matching records from right table.
+
+Q3. Find top 5 clients by volume.
+SQL
+SELECT client_code,
+
+SUM(volume) AS total_volume
+
+FROM trades
+
+GROUP BY client_code
+
+ORDER BY total_volume DESC
+
+LIMIT 5;
+
+Show more lines
+Q4. How do you troubleshoot slow SQL?
+
+Check:
+
+Execution Plan
+Missing Indexes
+Table scans
+Query structure
+Data volume
+4. Capital Market & Trading Questions
+Q1. What is CTCL?
+
+Computer To Computer Link
+
+Allows brokers' systems to connect directly with exchange systems.
+
+Q2. What is OMS?
+
+Order Management System.
+
+Responsible for:
+
+Order entry
+Modification
+Cancellation
+Routing to exchange
+
+Examples: Omnesys, Greeksoft.
+
+Q3. What is RMS?
+
+Risk Management System.
+
+Checks:
+
+Margin
+Exposure
+Position limits
+Order validity
+
+Before order reaches the exchange.
+
+Q4. What is HFT?
+
+High Frequency Trading.
+
+Uses low-latency infrastructure for executing strategies at high speed.
+
+Q5. What is TBT?
+
+Tick By Tick data.
+
+Provides real-time market updates from exchange.
+
+Q6. What are BOD and EOD?
+BOD
+Load master data
+Client mappings
+Limits
+Verify connectivity
+EOD
+Reports
+Reconciliation
+Trade processing
+Backups
+5. DevOps / AWS Questions
+Q1. What AWS services have you used?
+EC2
+
+Virtual servers hosting applications.
+
+S3
+
+Storage for logs, backups and files.
+
+Q2. What is Docker?
+
+Containerization platform used to package applications with dependencies.
+
+Benefits:
+
+Portability
+Consistency
+Faster deployment
+Q3. What is Jenkins?
+
+CI/CD tool used for automated build and deployment.
+
+Q4. Difference between VM and Docker Container?
+VM	DockerFull OS	Shares Host OS
+Heavy	Lightweight
+Slow startup	Fast startup
+6. Python Project Questions (Very Important)
+
+This is where you can stand out.
+
+Q1. Explain your CTCL Message Ratio Management Tool.
+
+Strong Answer:
+
+I identified a manual process used for CTCL Message Ratio tracking and built an enterprise desktop application to automate it.
+
+Key features:
+
+CTCL ratio calculation.
+Revision-based workflow.
+Audit trail.
+Historical record management.
+Excel automation.
+MySQL integration.
+Automatic backups.
+Validation engine.
+
+The application reduced manual effort significantly and improved data accuracy.
+
+Q2. Why did you choose Python?
+
+Because Python provides:
+
+Rapid development.
+Strong data processing libraries.
+Easy MySQL integration.
+Pandas/OpenPyXL support.
+FastAPI support for future migration.
+Q3. Explain Architecture.
+
+Say:
+
+Plain Text
+UI Layer
+
+ ↓
+
+Business Logic Layer
+
+ ↓
+
+Validation Layer
+
+ ↓
+
+Database Layer (MySQL)
+
+Show more lines
+
+Benefits:
+
+Loose coupling
+Easier maintenance
+Scalability
+Future web migration
+Q4. Why revision-based workflow?
+
+Because CTCL records are compliance-related.
+
+Instead of overwriting data:
+
+Maintain history.
+Track changes.
+Support audit requirements.
+Recover previous versions.
+Q5. If migrated to FastAPI, what architecture will you use?
+Plain Text
+Frontend (React/HTML)
+
+ ↓
+
+FastAPI Backend
+
+ ↓
+
+Service Layer
+
+ ↓
+
+Repository Layer
+
+ ↓
+
+MySQL
+
+Show more lines
+
+Containerized using Docker and deployed on AWS EC2.
+
+HR Question: Tell Me About Yourself
+2-Minute Answer
+
+"Hi, I'm Mahtab Alam. I have over 4 years of experience in Application Support and Production Support within Capital Markets and Investment Banking environments. Currently, I'm working as an Assistant Manager at Edelweiss Securities where I support mission-critical trading applications, perform Incident, Problem and Change Management, execute production deployments, and ensure high application availability.
+
+My technical expertise includes Linux, SQL, MySQL, AWS, Python, Docker, Jenkins and Control-M. Throughout my career, I've been involved in troubleshooting production incidents, performing Root Cause Analysis, reducing MTTR and improving system reliability.
+
+One achievement I'm particularly proud of is developing a CTCL Message Ratio Management Tool using Python, Pandas and MySQL, which automated a manual business process and improved operational efficiency.
+
+Going forward, I want to continue growing in Production Support, Site Reliability, DevOps and enterprise application development while contributing to highly available and scalable financial systems."
+
+Questions You Should Ask the Interviewer
+What trading applications does the team support?
+What are the major production challenges currently?
+What monitoring tools are being used?
+How is Incident and Problem Management handled?
+Are there opportunities for automation and DevOps involvement?
+What does success look like in the first 6 months?
+
+My assessment: Based on your resume, you can confidently target roles such as:
+
+Application Support Engineer (L2/L3)
+Production Support Engineer
+Trading Support Analyst
+Capital Markets Application Support
+SRE (Junior/Mid-Level)
+DevOps Support Engineer
+Technical Support Lead
+
+Your strongest selling point is not just support experience, but that you have built a real business application (CTCL Message Ratio Management Tool). Many support engineers cannot demonstrate development and automation experience, so make this project a major part of your interview narrative.
+
+Provide your feedback on BizChat
+You said:
+prepare atleast 50 question anser accross market based real seario with examples , or linux docker git jenkins commands and my sql postgre sql queries senarions joins constraints , control m automation like
+Copilot said:
+
+Excellent. For your profile, interviewers will focus on real production scenarios, not just definitions. Below are 50+ practical interview questions with answers covering:
+
+Capital Markets & Trading Support
+Production Support (L2/L3)
+Incident Management
+Linux
+SQL (MySQL/PostgreSQL)
+Docker
+Git
+Jenkins
+Control-M
+CTCL Project
+AWS
+RCA & Troubleshooting
+1. Production Support Scenario Questions
+Q1. Trading users report they cannot place orders. What will you check first?
+Answer
+
+Follow a structured approach:
+
+Check application health.
+Verify OMS service status.
+Check Exchange Connectivity.
+Verify RMS status.
+Check Database connectivity.
+Review application logs.
+Identify affected users.
+
+Linux Commands:
+
+Shell
+ps -ef | grep oms
+
+systemctl status oms
+
+
+
+tail -f oms.log
+
+Show more lines
+
+Example:
+
+At 9:15 AM market open, users unable to place orders.
+
+Root Cause:
+
+Database connection pool exhausted.
+
+Resolution:
+
+Restart service and increase connection pool size.
+
+Q2. Market Data is not updating. What can be the reason?
+Answer
+
+Possible causes:
+
+Exchange connectivity issue
+UDP packet drops
+Feed adapter down
+Network latency
+Exchange outage
+
+Checks:
+
+Shell
+netstat -i
+
+iftop
+
+ping
+
+Show more lines
+Q3. Application is slow but not down. How do you troubleshoot?
+Answer
+
+Check:
+
+Shell
+top
+
+htop
+
+free -m
+
+iostat
+
+vmstat
+
+Show more lines
+
+Verify:
+
+CPU
+Memory
+Disk I/O
+DB queries
+
+Example:
+
+Slow order placement due to unoptimized SQL query.
+
+Q4. How do you reduce MTTR?
+Answer
+Monitoring alerts
+Runbooks
+Automation
+Knowledge base
+RCA reviews
+2. Capital Market Scenarios
+Q5. What happens when user places a Buy Order?
+Answer
+
+Flow:
+
+Plain Text
+Client
+
+ ↓
+
+OMS
+
+ ↓
+
+RMS Validation
+
+ ↓
+
+Exchange
+
+ ↓
+
+Order Confirmation
+
+ ↓
+
+Trade Confirmation
+
+Show more lines
+Q6. What is CTCL?
+Answer
+
+Computer To Computer Link.
+
+Allows broker systems to directly place orders to exchange.
+
+Q7. Exchange connectivity is down. What is impact?
+Answer
+
+Users cannot:
+
+Place orders
+Modify orders
+Cancel orders
+
+Market data may still work.
+
+Q8. Difference between OMS and RMS?
+OMS
+
+Handles orders.
+
+RMS
+
+Handles risk validation.
+
+Example:
+
+Insufficient margin will be rejected by RMS.
+
+Q9. What are BOD activities?
+Answer
+Client master loading
+Security master loading
+Margin loading
+Connectivity checks
+Q10. What are EOD activities?
+Answer
+Trade processing
+Reports
+Backups
+Reconciliation
+3. Incident Management
+Q11. How do you handle a P1 Incident?
+Answer
+Incident bridge.
+Identify impact.
+Engage stakeholders.
+Restore service.
+RCA.
+
+Example:
+
+OMS crashed during market hours.
+
+Q12. Difference between Incident and Problem?
+Incident
+
+Immediate restoration.
+
+Problem
+
+Permanent fix.
+
+Q13. What should RCA contain?
+Answer
+Incident details
+Timeline
+Root Cause
+Resolution
+CAPA
+
+(Corrective and Preventive Action)
+
+4. Linux Interview Questions
+Q14. Find top CPU-consuming process.
+Shell
+top
+
+
+
+ps -eo pid,cmd,%cpu --sort=-%cpu
+
+Show more lines
+Q15. Find top memory-consuming process.
+Shell
+ps aux --sort=-%mem | head
+
+Show more lines
+Q16. Check disk usage.
+Shell
+df -h
+
+Show more lines
+Q17. Find largest files.
+Shell
+find / -type f -exec du -h {} + | sort -rh | head
+
+Show more lines
+Q18. Monitor logs continuously.
+Shell
+tail -f app.log
+
+Show more lines
+Q19. Search error in logs.
+Shell
+grep "ERROR" app.log
+
+Show more lines
+Q20. Show listening ports.
+Shell
+netstat -tulnp
+
+
+
+ss -tulnp
+
+Show more lines
+Q21. Check memory usage.
+Shell
+free -m
+
+Show more lines
+Q22. Check process running.
+Shell
+ps -ef | grep java
+
+Show more lines
+Q23. Kill process.
+Shell
+kill -9 PID
+
+Show more lines
+Q24. Find files older than 30 days.
+Shell
+find /logs -mtime +30
+
+Show more lines
+Q25. Check server uptime.
+Shell
+uptime
+
+Show more lines
+5. Docker Questions
+Q26. Show running containers.
+Shell
+docker ps
+
+Show more lines
+Q27. Show all containers.
+Shell
+docker ps -a
+
+Show more lines
+Q28. View container logs.
+Shell
+docker logs container_id
+
+Show more lines
+Q29. Enter container.
+Shell
+docker exec -it container_id bash
+
+Show more lines
+Q30. Build image.
+Shell
+docker build -t ctcl-app .
+
+Show more lines
+Q31. Run container.
+Shell
+docker run -d -p 8000:8000 ctcl-app
+
+Show more lines
+Q32. Remove container.
+Shell
+docker rm container_id
+
+Show more lines
+Q33. Explain Docker in your CTCL project.
+Answer
+
+Used Docker to:
+
+Package application
+Ensure environment consistency
+Simplify deployment
+6. Git Questions
+Q34. Clone repository.
+Shell
+git clone repo_url
+
+Show more lines
+Q35. Check status.
+Shell
+git status
+
+Show more lines
+Q36. Commit changes.
+Shell
+git add .
+
+git commit -m "Added CTCL validation"
+
+Show more lines
+Q37. Push changes.
+Shell
+git push origin main
+
+Show more lines
+Q38. Pull latest code.
+Shell
+git pull
+
+Show more lines
+Q39. Create feature branch.
+Shell
+git checkout -b feature_ctcl
+
+
+
+Show more lines
+Q40. View commit history.
+Shell
+git log
+
+Show more lines
+7. Jenkins Questions
+Q41. What is Jenkins?
+Answer
+
+CI/CD tool used for automated:
+
+Build
+Testing
+Deployment
+Q42. Explain Jenkins Pipeline.
+
+Example:
+
+Plain Text
+Git
+
+ ↓
+
+Build
+
+ ↓
+
+Test
+
+ ↓
+
+Deploy
+
+Show more lines
+Q43. Trigger Jenkins job from Git.
+
+Using:
+
+Plain Text
+Webhook
+
+Show more lines
+Q44. How do you monitor failed deployment?
+Answer
+
+Review:
+
+Console Output
+Build Logs
+Deployment Logs
+8. Control-M Questions
+Q45. What is Control-M?
+Answer
+
+Enterprise workload automation tool.
+
+Used for:
+
+Scheduling
+Monitoring
+Batch processing
+Q46. Why use Control-M?
+Answer
+
+Automates repetitive tasks.
+
+Example:
+
+EOD processing.
+
+Q47. Control-M Job fails. What do you check?
+Answer
+
+Check:
+
+Job logs
+Exit code
+Dependencies
+Agent status
+Q48. Example of Automation using Control-M
+Answer
+
+Daily CTCL file processing.
+
+Flow:
+
+Plain Text
+Receive File
+
+ ↓
+
+Validate
+
+ ↓
+
+Load Database
+
+ ↓
+
+Generate Report
+
+ ↓
+
+Email Stakeholders
+
+Show more lines
+9. MySQL/PostgreSQL Questions
+Q49. Get duplicate records.
+SQL
+SELECT ctcl_id,
+
+COUNT(*)
+
+FROM ctcl_master
+
+GROUP BY ctcl_id
+
+HAVING COUNT(*) > 1;
+
+Show more lines
+Q50. INNER JOIN
+SQL
+SELECT c.client_code,
+
+t.trade_id
+
+FROM clients c
+
+INNER JOIN trades t
+
+ON c.client_code=t.client_code;
+
+Show more lines
+Q51. LEFT JOIN
+SQL
+SELECT c.client_code,
+
+t.trade_id
+
+FROM clients c
+
+LEFT JOIN trades t
+
+ON c.client_code=t.client_code;
+
+Show more lines
+Q52. Find clients without trades.
+SQL
+SELECT c.client_code
+
+FROM clients c
+
+LEFT JOIN trades t
+
+ON c.client_code=t.client_code
+
+WHERE t.trade_id IS NULL;
+
+Show more lines
+Q53. Top 10 volume clients.
+SQL
+SELECT client_code,
+
+SUM(volume)
+
+FROM trades
+
+GROUP BY client_code
+
+ORDER BY SUM(volume) DESC
+
+LIMIT 10;
+
+Show more lines
+Q54. Difference between DELETE and TRUNCATE
+
+DELETE
+
+SQL
+DELETE FROM trades;
+
+Show more lines
+
+Rollback possible.
+
+TRUNCATE
+
+SQL
+TRUNCATE TABLE trades;
+
+Show more lines
+
+Faster.
+
+Q55. Explain Primary Key.
+Answer
+
+Unique identifier.
+
+SQL
+client_id INT PRIMARY KEY
+
+Show more lines
+Q56. Explain Foreign Key.
+SQL
+FOREIGN KEY(client_id)
+
+REFERENCES clients(client_id)
+
+Show more lines
+
+Maintains referential integrity.
+
+Q57. Unique Constraint
+SQL
+email VARCHAR(100) UNIQUE
+
+Show more lines
+
+No duplicate values.
+
+Q58. Check Slow Queries
+
+MySQL:
+
+SQL
+SHOW PROCESSLIST;
+
+Show more lines
+
+PostgreSQL:
+
+SQL
+SELECT * FROM pg_stat_activity;
+
+Show more lines
+Q59. Window Function Example
+SQL
+SELECT employee,
+
+salary,
+
+RANK() OVER(
+
+ORDER BY salary DESC
+
+)
+
+FROM employees;
+
+Show more lines
+Q60. Find Second Highest Salary
+SQL
+SELECT MAX(salary)
+
+FROM employee
+
+WHERE salary <
+
+(
+
+SELECT MAX(salary)
+
+FROM employee
+
+);
+
+Show more lines
+10. AWS Questions
+Q61. What is EC2?
+
+Virtual server on AWS.
+
+Q62. What is S3?
+
+Object storage.
+
+Used for:
+
+Logs
+Backups
+Reports
+Q63. How would you deploy CTCL application on AWS?
+Answer
+Plain Text
+Git
+
+ ↓
+
+Jenkins
+
+ ↓
+
+Docker Image
+
+ ↓
+
+EC2 Deployment
+
+ ↓
+
+MySQL Database
+
+ ↓
+
+S3 Backup
+
+Show more lines
+11. CTCL Project Questions
+Q64. Explain your CTCL Message Ratio Tool in 3 minutes.
+Answer
+
+Business Problem: Manual CTCL ratio calculation done through Excel.
+
+Solution: Built Python-based enterprise application.
+
+Modules:
+
+File Upload
+Validation Engine
+Ratio Calculation
+Audit Trail
+Revision Management
+Database Storage
+Automatic Backup
+
+Tech Stack:
+
+Plain Text
+Python
+
+Pandas
+
+OpenPyXL
+
+MySQL
+
+Tkinter/PyQt
+
+Docker (future)
+
+FastAPI (future)
+
+Show more lines
+
+Benefits:
+
+90% manual effort reduction
+Improved accuracy
+Historical tracking
+Audit compliance
+Q65. Why revision-based architecture?
+Answer
+
+Regulatory and audit requirements.
+
+Never overwrite records.
+
+Maintain:
+
+Previous version
+New version
+Change history
+Q66. If database goes down, how will your CTCL application behave?
+Answer
+
+Implement:
+
+Retry mechanism
+Error handling
+Auto backup
+Queue-based processing
+Most Expected Final HR Question
+Why should we hire you?
+
+Answer:
+
+"I bring a unique combination of Production Support and Development expertise. I have over 4 years of experience supporting mission-critical trading systems in Capital Markets with strong skills in Incident Management, Linux, SQL, deployments, and RCA. Additionally, I have built an enterprise-grade CTCL Message Ratio Management application that automated a business process and improved operational efficiency. This combination allows me not only to resolve production issues quickly but also to automate and prevent recurring operational challenges, making me a valuable contributor to any support or reliability engineering team."
+
+This set of 66 questions is very close to what you'll face for Application Support Engineer, Production Support Engineer, Capital Markets Support, L2/L3 Support, Trading Support Analyst, and SRE interviews at firms like Morgan Stanley, JP Morgan, Nomura, Deutsche Bank, UBS, Goldman Sachs, NSE/BSE vendors, Tata Consultancy Services, Wipro, Infosys, LTI Mindtree, and Accenture.
+
+Provide your feedback on BizChat
+You said:
+ion
+Copilot said:
+
+If by "ion" you mean more interview questions, then here are advanced L2/L3 Production Support interview questions that are very commonly asked in Investment Banking, Capital Markets, Trading Support, SRE, and Production Support interviews.
+
+Advanced Incident Management Scenarios
+Q67. Market has opened and CPU on OMS server suddenly reaches 100%. What will you do?
+Answer
+
+Check:
+
+Shell
+top
+
+htop
+
+ps -eo pid,cmd,%cpu --sort=-%cpu
+
+Show more lines
+
+Identify process consuming CPU.
+
+Verify:
+
+Infinite loops
+Log flooding
+Batch jobs
+High incoming market data
+
+Immediate Action:
+
+Stop problematic process if safe
+Scale resources if required
+Inform stakeholders
+Q68. Database is up but application cannot connect. What will you check?
+Answer
+
+Check:
+
+Shell
+telnet dbserver 3306
+
+Show more lines
+
+or
+
+Shell
+nc -zv dbserver 3306
+
+Show more lines
+
+Verify:
+
+DB Listener
+Firewall
+Credentials
+Connection Pool
+Network routing
+Q69. A file is not getting processed in production.
+Answer
+
+Check:
+
+File arrival
+File permissions
+Batch scheduler
+Application logs
+
+Commands:
+
+Shell
+ls -ltr
+
+
+
+tail -100 app.log
+
+Show more lines
+Q70. What will you do if a deployment fails?
+Answer
+
+Steps:
+
+Identify failed component.
+Check deployment logs.
+Rollback if required.
+Restore previous stable version.
+Prepare RCA.
