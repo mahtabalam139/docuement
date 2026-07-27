@@ -1,1 +1,12 @@
+Resume Impact Version (Short)
 
+If you want a concise ATS-friendly version:
+
+CTCL Message Ratio Management Web Application | FastAPI, MySQL, Docker, AWS EC2
+
+Developed and deployed a web-based CTCL Message Ratio Management platform for Capital Markets operations.
+Migrated a desktop application to FastAPI-based web architecture with MySQL backend.
+Implemented user authentication, audit logging, revision tracking, search functionality, and Excel integration.
+Containerized the application using Docker and Docker Compose and deployed on AWS EC2.
+Designed centralized database architecture with backup and recovery mechanisms.
+Built complete end-to-end deployment pipeline using GitHub, Docker, AWS, and MySQL.
