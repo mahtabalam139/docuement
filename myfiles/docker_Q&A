@@ -1,1 +1,199 @@
+Docker Interview Questions and Answers with Real World Examples 
 
+What is Docker? 
+
+Answer: Docker is a containerization platform used to package applications and dependencies into portable containers. Example: CTCL FastAPI + MySQL deployed consistently on AWS EC2. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Why do we need Docker? 
+
+Answer: To eliminate environment mismatch and simplify deployment. Example: Same CTCL app runs on laptop and EC2 without changes. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+What is a Container? 
+
+Answer: A lightweight isolated runtime containing code, libraries and dependencies. Example: FastAPI container and MySQL container. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Docker Architecture 
+
+Answer: Docker Client -> Docker Daemon -> Images, Containers, Networks, Volumes. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Docker vs VM 
+
+Answer: Containers share host OS and start fast; VMs require full OS and more resources. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Flow of Docker 
+
+Answer: Dockerfile -> Image -> Container -> Deployment. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+What is Dockerfile? 
+
+Answer: A text file with image build instructions. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+What is Docker Registry? 
+
+Answer: Central repository for images such as Docker Hub, AWS ECR. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Docker Installation Windows 
+
+Answer: Install Docker Desktop and WSL2. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Docker Installation Mac 
+
+Answer: Install Docker Desktop for Mac. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Docker Installation Linux 
+
+Answer: sudo apt install docker.io docker-compose-v2 -y 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Creating Demo React Project 
+
+Answer: Create React app, Dockerfile, build image and run container. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+How to create Dockerfile? 
+
+Answer: Use FROM, WORKDIR, COPY, RUN and CMD instructions. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+How to build Docker Image? 
+
+Answer: docker build -t myapp:v1 . 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Manage and Run Containers 
+
+Answer: docker run, ps, stop, start, rm. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Useful Container Commands 
+
+Answer: docker logs, exec, inspect, stats. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Managing Images 
+
+Answer: docker images, rmi, pull, push. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Update our Project 
+
+Answer: docker compose up --build -d 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Pre-defined Images 
+
+Answer: mysql:8.0, nginx, python:3.12, node:20 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Interactive Mode 
+
+Answer: docker exec -it container bash 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Push Image to Docker Hub 
+
+Answer: docker login, tag, push. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Pull Images Remotely 
+
+Answer: docker pull image_name 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Docker Volume 
+
+Answer: Persistent storage. Example: MySQL data volume. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Bind Mounts 
+
+Answer: Map host directory to container path. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Working with APIs 
+
+Answer: Expose APIs using port mapping like 8000:8000. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Container with Local DB 
+
+Answer: FastAPI container connects to MySQL container using service name. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Project with Multiple Containers 
+
+Answer: Frontend, Backend and Database containers. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Docker Network 
+
+Answer: Allows inter-container communication. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+What is Docker Compose? 
+
+Answer: Tool to manage multi-container applications via YAML. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Compose for Multiple Containers 
+
+Answer: Define app and database services together. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Compose with Network 
+
+Answer: Containers communicate using service names. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Compose with Volume 
+
+Answer: Persist MySQL data through volumes. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
+
+Compose with Port Binding 
+
+Answer: HostPort:ContainerPort e.g. 8000:8000. 
+
+Real World Example: Used in CTCL Message Ratio Management Web Application deployed using FastAPI, MySQL, Docker Compose and AWS EC2. 
