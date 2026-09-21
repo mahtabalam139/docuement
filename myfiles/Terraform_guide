@@ -1,0 +1,31 @@
+$env:PROCESSOR_ARCHITECTURE
+terraform version
+Get-Command terraform or where.exe terraform
+
+Step : Install Terraform using WinGet
+First check whether WinGet is available:
+winget --version
+
+Then install it:
+winget install Hashicorp.Terraform
+
+Restart your terminal
+terraform version
+Verify Windows can locate Terraform - " where.exe terraform " then - Get-Command terraform
+
+Check Terraform commands - terraform
+
+Step 1: Create your first Terraform file
+code main.tf 
+VS Code should open a file named: main.tf
+      terraform {
+      required_version = ">= 1.16.0"
+      }
+save S
+
+Step 2: Initialize Terraform  
+  terraform init
+
+Step 3: Format the file
+  terraform fmt
+  terraform validate
