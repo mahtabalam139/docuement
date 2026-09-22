@@ -29,3 +29,63 @@ Step 2: Initialize Terraform
 Step 3: Format the file
   terraform fmt
   terraform validate
+
+Install AWS CLI on Windows
+      aws --version  if it return - aws : The term 'aws' is not recognized...
+      irm 'https://awscli.amazonaws.com/v2/install.ps1' | iex  -- to install 
+      aws --version -- after re-open the terminal
+
+Configure AWS Credentials
+      aws configure
+            AWS Access Key ID:
+            AWS Secret Access Key:
+            Default region name:
+            Default output format:
+
+Verify AWS Authentication
+      aws sts get-caller-identity
+            {
+            "UserId": "...",
+            "Account": "...",
+            "Arn": "arn:aws:iam::ACCOUNT:user/USER"
+            }
+
+
+                  Check Terraform version
+                        terraform version
+                  
+                  Show Terraform commands
+                        terraform
+                        
+                  Initialize directory
+                        terraform init
+                  
+                  Format configuration
+                        terraform fmt
+                  
+                  Validate configuration
+                        terraform validate
+                  
+                  Preview changes
+                        terraform plan
+                  
+                  Apply changes
+                        terraform apply
+                  
+                  Auto approve
+                        terraform apply -auto-approve
+                  
+                  List resources in state
+                        terraform state list
+                  
+                  Inspect resource state
+                        terraform state show aws_s3_bucket.my_bucket
+                  
+                  Show state/infrastructure representation
+                        terraform show
+                  
+                  Show required providers
+                        terraform providers
+                  
+                  Destroy managed infrastructure
+                        terraform destroy
